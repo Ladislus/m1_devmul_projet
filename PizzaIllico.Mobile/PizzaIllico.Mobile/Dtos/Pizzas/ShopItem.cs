@@ -1,4 +1,6 @@
+using System;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace PizzaIllico.Mobile.Dtos.Pizzas
 {
@@ -21,5 +23,6 @@ namespace PizzaIllico.Mobile.Dtos.Pizzas
         
         [JsonProperty("minutes_per_kilometer")]
         public double MinutesPerKilometer { get; set; }
+
     }
 }

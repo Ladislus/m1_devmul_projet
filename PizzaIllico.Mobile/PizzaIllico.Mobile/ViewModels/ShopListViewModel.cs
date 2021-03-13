@@ -7,6 +7,7 @@ using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.ViewModels
@@ -17,23 +18,55 @@ namespace PizzaIllico.Mobile.ViewModels
 
 	    public ObservableCollection<ShopItem> Shops
 	    {
-		    get => _shops;
-		    set => SetProperty(ref _shops, value);
+            get => _shops;
+			set => SetProperty(ref _shops, value);
 	    }
 
 		public ICommand SelectedCommand { get; }
 
 	    public ShopListViewModel()
 	    {
-		    SelectedCommand = new Command<ShopItem>(SelectedAction);
+			SelectedCommand = new Command<ShopItem>(SelectedAction);
 	    }
 
-	    private void SelectedAction(ShopItem obj)
-	    {
-		    
-	    }
+		private void SelectedAction(ShopItem obj)
+		{
+			GetLastPosAsync();
+		}
 
-	    public override async Task OnResume()
+		public async Task<Location> GetLastPosAsync()
+		{
+			try
+			{
+				var location = await Geolocation.GetLastKnownLocationAsync();
+
+				if (location != null)
+				{
+					Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+				}
+				return location;
+			}
+			catch (FeatureNotSupportedException fnsEx)
+			{
+				// Handle not supported on device exception
+			}
+			catch (FeatureNotEnabledException fneEx)
+			{
+				// Handle not enabled on device exception
+			}
+			catch (PermissionException pEx)
+			{
+				// Handle permission exception
+			}
+			catch (Exception ex)
+			{
+				// Unable to get location
+			}
+
+		}
+
+
+		public override async Task OnResume()
         {
 	        await base.OnResume();
 
