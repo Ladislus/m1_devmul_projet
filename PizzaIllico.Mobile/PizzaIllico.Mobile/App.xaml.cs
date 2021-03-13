@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using PizzaIllico.Mobile.Pages;
 using PizzaIllico.Mobile.Services;
+using Storm.Mvvm;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
@@ -9,7 +10,7 @@ using Xamarin.Forms.Xaml;
 
 namespace PizzaIllico.Mobile
 {
-    public partial class App
+    public partial class App : MvvmApplication
     {
         public App() : base(() => new ConnexionPage(), RegisterServices)
         {
@@ -27,3 +28,5 @@ namespace PizzaIllico.Mobile
         }
     }
 }
+
+

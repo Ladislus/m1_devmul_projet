@@ -1,4 +1,6 @@
-﻿using Storm.Mvvm;
+﻿using PizzaIllico.Mobile.Pages;
+using Storm.Mvvm;
+using Storm.Mvvm.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +17,7 @@ namespace PizzaIllico.Mobile.ViewModels
         public ConnexionViewModel()
         {
             CommandeConnexion = new Command(connexion);
+            GotoInscription = new Command(gotoInscriptionAsync);
         }
 
         public String Login
@@ -32,10 +35,19 @@ namespace PizzaIllico.Mobile.ViewModels
         {
             get;
         }
+        public ICommand GotoInscription
+        {
+            get;
+        }
+        
         public void connexion()
         {
             Console.WriteLine(Login);
             Console.WriteLine(Motdepasse);
+        }
+        public async void gotoInscriptionAsync()
+        {
+            await DependencyService.Get<INavigationService>().PushAsync<InscriptionPage>();
         }
 
 

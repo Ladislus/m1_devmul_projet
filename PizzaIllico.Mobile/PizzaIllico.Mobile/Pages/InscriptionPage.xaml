@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PizzaIllico.Mobile.Pages.ConnexionPage">
+             x:Class="PizzaIllico.Mobile.Pages.InscriptionPage">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Orientation="Vertical" VerticalOptions="Center" Padding="10">
-                <Label Text="Connexion" FontAttributes="Bold" FontSize="Title" HorizontalOptions="CenterAndExpand"></Label>
+                <Label Text="Inscription" FontAttributes="Bold" FontSize="Title" HorizontalOptions="CenterAndExpand"></Label>
                 <Label Text="Login" FontSize="Subtitle" FontAttributes="Bold"></Label>
                 <Entry Placeholder="Votre login" Text="{Binding Login}"></Entry>
                 <Label Text="Mot de passe" FontSize="Subtitle" FontAttributes="Bold"></Label>
                 <Entry Placeholder="*******" IsPassword="True" Text="{Binding Motdepasse}"></Entry>
-                <Label Text="Je veux m'inscrire" TextColor="SkyBlue" FontAttributes="Bold">
+                <Label Text="Confirmation du mot de passe" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="*******" IsPassword="True" Text="{Binding Motdepasse2}"></Entry>
+                <Label Text="J'ai déjà un compte" TextColor="SkyBlue" FontAttributes="Bold" >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding GotoInscription}" />
+                        <TapGestureRecognizer Command="{Binding GotoConnexion}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <Button Text="Se connecter" BackgroundColor="SkyBlue"  Command="{Binding CommandeConnexion}"></Button>
+                <Button Text="S'inscrire" BackgroundColor="SkyBlue"  Command="{Binding CommandeConnexion}"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
