@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaIllico.Mobile.Pages.ConnexionPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical" VerticalOptions="Center" Padding="10">
+                <Label Text="Connexion" FontAttributes="Bold" FontSize="Title" HorizontalOptions="CenterAndExpand"></Label>
+                <Label Text="Login" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="Votre login"></Entry>
+                <Label Text="Mot de passe" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="*******" IsPassword="True"></Entry>
+                <Label Text="Je veux m'inscrire" TextColor="SkyBlue" FontAttributes="Bold"></Label>
+                <Button Text="Se connecter" BackgroundColor="SkyBlue"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
