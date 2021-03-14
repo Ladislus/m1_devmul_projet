@@ -52,7 +52,7 @@ namespace PizzaIllico.Mobile.ViewModels
         public async void gotoHomeList()
         {
 
-            await DependencyService.Get<INavigationService>().PushAsync<ShopListPage>();
+            await DependencyService.Get<INavigationService>().PushAsync<MainNavPage>();
 
 
         }
