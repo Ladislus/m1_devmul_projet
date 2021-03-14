@@ -9,7 +9,8 @@
                        x:Class="PizzaIllico.Mobile.Pages.ShopListPage"
                        x:DataType="viewModels:ShopListViewModel"
                        Title="Shops">
-    <StackLayout>
+    <StackLayout Margin="10">
+        <Label Text="Les resto" FontSize="Title" FontAttributes="Bold"></Label>
         <ListView ItemsSource="{Binding Shops}"
                   SelectionMode="None"
                   >
