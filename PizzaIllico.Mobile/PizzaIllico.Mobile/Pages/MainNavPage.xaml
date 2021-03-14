@@ -12,6 +12,6 @@
 >
 
     </forms:BaseContentPage>
-    <pages:ProfilePage/>
+    <pages:ProfileTabbedPage/>
 
 </TabbedPage>
