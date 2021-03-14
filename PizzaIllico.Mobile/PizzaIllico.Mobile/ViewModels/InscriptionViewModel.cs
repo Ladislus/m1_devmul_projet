@@ -15,6 +15,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public InscriptionViewModel()
         {
+            CommandInscription = new Command(inscription);
             GotoConnexion = new Command(gotoConnexionAsync);
         }
         public String Login
@@ -36,9 +37,30 @@ namespace PizzaIllico.Mobile.ViewModels
         {
             get;
         }
+        public ICommand CommandInscription
+        {
+            get;
+        }
+
+        public void inscription()
+        {
+            Console.WriteLine(Login);
+            Console.WriteLine(Motdepasse);
+            Console.WriteLine(Motdepasse2);
+            gotoHomeList();
+        }
+        public async void gotoHomeList()
+        {
+
+            await DependencyService.Get<INavigationService>().PushAsync<ShopListPage>();
+
+
+        }
         public async void gotoConnexionAsync()
         {
-            await DependencyService.Get<INavigationService>().PopAsync();
+            await DependencyService.Get<INavigationService>().PushAsync<ConnexionPage>();
+
+
         }
     }
 }
