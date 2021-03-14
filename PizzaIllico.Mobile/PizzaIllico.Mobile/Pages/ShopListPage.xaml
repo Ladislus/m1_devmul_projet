@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<forms:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
                        xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
@@ -8,27 +8,62 @@
                        xmlns:extensions="clr-namespace:PizzaIllico.Mobile.Extensions;assembly=PizzaIllico.Mobile"
                        x:Class="PizzaIllico.Mobile.Pages.ShopListPage"
                        x:DataType="viewModels:ShopListViewModel"
-                       Title="Shops">
-    <StackLayout Margin="10">
-        <Label Text="Les resto" FontSize="Title" FontAttributes="Bold"></Label>
-        <ListView ItemsSource="{Binding Shops}"
-                  SelectionMode="None"
+                       NavigationPage.HasNavigationBar="False"
+                       >
+    <forms:BaseContentPage 
+                 Title="Liste"
+                 IconImageSource="listeResto"
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
+                 xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
+                 x:DataType="viewModels:ShopListViewModel">
+        <StackLayout Margin="10">
+            <StackLayout Orientation="Horizontal">
+                <Image HeightRequest="30" Source="resto"></Image>
+                <Label Text="Restaurant disponible" FontSize="Title" FontAttributes="Bold"></Label>
+                <Image HeightRequest="30" Source="resto"></Image>
+            </StackLayout>
+
+            <Label Margin="0,10,0,0" Text="Voici la liste des restaurants disponible proche de chez vous"></Label>
+            <BoxView Color="Black"
+                     Margin="0,0,0,10"
+                     HorizontalOptions="FillAndExpand"
+                     HeightRequest="1"
+                     />
+            <ListView ItemsSource="{Binding Shops}" SelectionMode="None" HasUnevenRows="True"
                   >
-            <ListView.Behaviors>
-                <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}"/>
-            </ListView.Behaviors>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell x:DataType="pizzas:ShopItem">
-                        <StackLayout Orientation="Vertical">
-                            <Label Text="{Binding Name}"
-                                    />
-                            <Label Text="{Binding Address}"
-                                   />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
-</forms:BaseContentPage>
+                <ListView.Behaviors>
+                    <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}"/>
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell x:DataType="pizzas:ShopItem" Height="200">
+                            <ContentView Padding="10,10,0,10" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                                <StackLayout>
+                                    <Label FontSize="Title" FontAttributes="Bold"  Text="{Binding Name}"></Label>
+                                    <Label Text="{Binding Address}"></Label>
+                                </StackLayout>
+                            </ContentView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </forms:BaseContentPage>
+    <forms:BaseContentPage 
+        Title="Maps"
+        IconImageSource="MapsResto"
+>
+        
+    </forms:BaseContentPage>
+    <forms:BaseContentPage 
+        Title="Profil"
+        IconImageSource="profil"
+        
+>
+
+    </forms:BaseContentPage>
+
+
+</TabbedPage>
