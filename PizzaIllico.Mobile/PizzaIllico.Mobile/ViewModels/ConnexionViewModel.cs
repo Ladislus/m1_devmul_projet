@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-
+using Xamarin.Essentials;
 namespace PizzaIllico.Mobile.ViewModels
 {
     class ConnexionViewModel : ViewModelBase
@@ -19,15 +19,6 @@ namespace PizzaIllico.Mobile.ViewModels
         private String _login;
         private String _motdepasse;
 
-        //public async Task ReplaceAsync(Page page)
-        //{
-        //    var current = DependencyService.Get<ICurrentPageService>().CurrentPage;
-        //    Page lastPage = current.Navigation.NavigationStack.Last();
-
-        //    await DependencyService.Get<INavigationService>().PushAsync(page);
-
-        //    current.Navigation.RemovePage(lastPage);
-        //}
 
         public ConnexionViewModel()
         {
@@ -67,7 +58,16 @@ namespace PizzaIllico.Mobile.ViewModels
             if (response.IsSuccess)
             {
                 Console.WriteLine($"Appel HTTP : {response.Data}");
-                
+                try
+                {
+                    await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
+                    await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
+                }
+                catch (Exception ex)
+                {
+                    // Possible that device doesn't support secure storage on device.
+                }
+
             }
             gotoHomeList();
         }
