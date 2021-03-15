@@ -1,4 +1,7 @@
-﻿using PizzaIllico.Mobile.Pages;
+﻿using PizzaIllico.Mobile.Dtos;
+using PizzaIllico.Mobile.Dtos.Authentications;
+using PizzaIllico.Mobile.Pages;
+using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
 using Storm.Mvvm.Services;
 using System;
@@ -52,10 +55,20 @@ namespace PizzaIllico.Mobile.ViewModels
             get;
         }
         
-        public void connexion()
+        public async void connexion()
         {
             Console.WriteLine(Login);
             Console.WriteLine(Motdepasse);
+
+            IUserService service = DependencyService.Get<IUserService>();
+            Response<LoginResponse> response = await service.Connect(Login, Motdepasse);
+
+            Console.WriteLine($"Appel HTTP : {response.IsSuccess}");
+            if (response.IsSuccess)
+            {
+                Console.WriteLine($"Appel HTTP : {response.Data}");
+                
+            }
             gotoHomeList();
         }
         public async void gotoInscriptionAsync()
