@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<forms:BaseContentPage   
+                        xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"   
+                        x:Class="PizzaIllico.Mobile.Pages.ProfilePage"
+                        Title="Paramètre"
+                        IconImageSource="setting"
+>
+    <StackLayout Padding="10,10,10,0" HorizontalOptions="FillAndExpand">
+            <Label Text="Gestion du profil"  FontSize="Title" FontAttributes="Bold"/>
+            <Label Text="Vous pouvez changer votre mot de passe ici !"/>
+            <BoxView Color="Black"
+                         Margin="0,0,0,10"
+                         HorizontalOptions="FillAndExpand"
+                         HeightRequest="1"
+                         />
+        <FlexLayout Direction="Row" AlignItems="Center"  Wrap="Wrap" HorizontalOptions="FillAndExpand">
+            <Label Text="Mot de passe actuel : " FontAttributes="Bold"></Label>
+            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"></Entry>
+        </FlexLayout>
+        <FlexLayout Direction="Row" AlignItems="Center"  Wrap="Wrap" HorizontalOptions="FillAndExpand">
+            <Label Text="Changer de mot de passe : " FontAttributes="Bold"></Label>
+            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"></Entry>
+        </FlexLayout>
+        <FlexLayout Direction="Row" AlignItems="Center">
+            <Label Text="Confirmer le mot de passe : " FontAttributes="Bold"></Label>
+            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"></Entry>
+        </FlexLayout>
+        <Button Text="Confirmer" BackgroundColor="SkyBlue"></Button>
+    </StackLayout>
+</forms:BaseContentPage>

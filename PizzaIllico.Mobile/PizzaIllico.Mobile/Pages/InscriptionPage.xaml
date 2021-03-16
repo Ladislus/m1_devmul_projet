@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PizzaIllico.Mobile.Pages.InscriptionPage"
+             NavigationPage.HasNavigationBar="False"
+             Title="Inscription">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical" VerticalOptions="Center" Padding="10">
+                <Label Text="Inscription" FontAttributes="Bold" FontSize="Title" HorizontalOptions="CenterAndExpand"></Label>
+                
+                <Label Text="Login" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="Votre adresse mail" Text="{Binding Login}"></Entry>
+                
+                <Label Text="Prénom" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="John" Text="{Binding Prenom}"></Entry>                  
+                
+                <Label Text="Nom" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="Doe" Text="{Binding Nom}"></Entry>                    
+                
+                <Label Text="Numéro de téléphone" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="0658951235" Text="{Binding PhoneNum}" Keyboard="Numeric"></Entry>                
+                
+                <Label Text="Mot de passe" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="*******" IsPassword="True" Text="{Binding Motdepasse}"></Entry>
+                
+                <Label Text="Confirmation du mot de passe" FontSize="Subtitle" FontAttributes="Bold"></Label>
+                <Entry Placeholder="*******" IsPassword="True" Text="{Binding Motdepasse2}"> </Entry>
+                
+                <Label Text="J'ai déjà un compte" TextColor="SkyBlue" FontAttributes="Bold" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GotoConnexion}" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Button Text="S'inscrire" BackgroundColor="SkyBlue"  Command="{Binding CommandInscription}"></Button>
+                <Label FontSize="Subtitle" TextColor="Firebrick" Text="{Binding ErrorMsg}"></Label>
+                
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

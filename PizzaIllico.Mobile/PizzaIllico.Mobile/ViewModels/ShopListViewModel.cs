@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
+using PizzaIllico.Mobile.Pages;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
+
 using Xamarin.Essentials;
+
+using Storm.Mvvm.Services;
+
 using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.ViewModels
@@ -25,14 +30,15 @@ namespace PizzaIllico.Mobile.ViewModels
 		public ICommand SelectedCommand { get; }
 
 	    public ShopListViewModel()
-	    {
-			SelectedCommand = new Command<ShopItem>(SelectedAction);
+	    { 
+		    SelectedCommand = new Command<ShopItem>(SelectedActionAsync);
 	    }
 
-		private void SelectedAction(ShopItem obj)
-		{
-			ShopListViewModel.GetLastPosAsync();
-        }
+	    private async void SelectedActionAsync(ShopItem obj)
+	    {
+		    await DependencyService.Get<INavigationService>().PushAsync<ConnexionPage>();
+
+	    }
 
         public static async Task<Location> GetLastPosAsync()
 		{
@@ -64,8 +70,7 @@ namespace PizzaIllico.Mobile.ViewModels
 			}
 			return new Location(0.0, 0.0);
 		}
-
-
+        
 		public override async Task OnResume()
         {
 	        await base.OnResume();
