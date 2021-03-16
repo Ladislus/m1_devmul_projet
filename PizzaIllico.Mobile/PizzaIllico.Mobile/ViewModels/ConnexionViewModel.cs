@@ -67,7 +67,6 @@ namespace PizzaIllico.Mobile.ViewModels
                 {
                     // Possible that device doesn't support secure storage on device.
                 }
-
             }
             gotoHomeList();
         }
