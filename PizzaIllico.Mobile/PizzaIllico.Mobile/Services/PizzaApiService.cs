@@ -28,9 +28,9 @@ namespace PizzaIllico.Mobile.Services
 	        return await _apiService.Get<Response<List<ShopItem>>>(Urls.LIST_SHOPS);
         }
 
-        public Task<Response<List<PizzaItem>>> ListPizzas(int shopId)
+        public async Task<Response<List<PizzaItem>>> ListPizzas(int shopId)
         {
-            throw new NotImplementedException();
+            return await _apiService.Get<Response<List<PizzaItem>>>(Urls.LIST_PIZZA, shopId.ToString());
         }
 
     }
