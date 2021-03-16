@@ -17,7 +17,7 @@ namespace PizzaIllico.Mobile.ViewModels
     class ConnexionViewModel : ViewModelBase
     {
         private String _login;
-        private String _motdepasse;
+        private String _motdepasse, _errorMsg;
 
 
         public ConnexionViewModel()
@@ -30,6 +30,11 @@ namespace PizzaIllico.Mobile.ViewModels
         {
             get => _login;
             set => SetProperty(ref _login, value);
+        }        
+        public String ErrorMsg
+        {
+            get => _errorMsg;
+            set => SetProperty(ref _errorMsg, value);
         }
         public String Motdepasse
         {
@@ -62,13 +67,18 @@ namespace PizzaIllico.Mobile.ViewModels
                 {
                     await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
                     await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
+                    gotoHomeList();
+
                 }
                 catch (Exception ex)
                 {
                     // Possible that device doesn't support secure storage on device.
                 }
             }
-            gotoHomeList();
+            else
+            {
+                ErrorMsg = "Impossible de se connecter, réessayez plus tard.";
+            }
         }
         public async void gotoInscriptionAsync()
         {
