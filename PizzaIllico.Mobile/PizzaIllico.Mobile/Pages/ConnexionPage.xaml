@@ -19,6 +19,8 @@
                     </Label.GestureRecognizers>
                 </Label>
                 <Button Text="Se connecter" BackgroundColor="SkyBlue"  Command="{Binding CommandeConnexion}"></Button>
+                <Label FontSize="Subtitle" TextColor="Firebrick" Text="{Binding ErrorMsg}"></Label>
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
