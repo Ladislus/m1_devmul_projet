@@ -32,7 +32,7 @@
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell x:DataType="pizzas:ShopItem" Height="200">
+                        <ViewCell x:DataType="pizzas:ShopItem" Height="150">
                             <ContentView Padding="10,10,0,10" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                                 <StackLayout>
                                     <Label FontSize="Title" FontAttributes="Bold"  Text="{Binding Name}"></Label>

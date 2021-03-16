@@ -8,7 +8,7 @@ namespace PizzaIllico.Mobile.Services
 {
     public interface IApiService
     {
-        Task<TResponse> Get<TResponse>(string url);
+        Task<TResponse> Get<TResponse>(string url, string param = null);
         Task<TResponse> Post<TResponse, TData>(string url, TData data);
 
     }
@@ -18,9 +18,19 @@ namespace PizzaIllico.Mobile.Services
         private const string HOST = "https://pizza.julienmialon.ovh/";
         private readonly HttpClient _client = new HttpClient();
 
-        public async Task<TResponse> Get<TResponse>(string url)
+        public async Task<TResponse> Get<TResponse>(string url, string param = null)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, HOST + url);
+
+            HttpRequestMessage request;
+            if (param == null)
+            {
+                request = new HttpRequestMessage(HttpMethod.Get, HOST + url);
+            }
+            else
+            {
+                url = url.Replace("{shopId}",param);
+                request = new HttpRequestMessage(HttpMethod.Get, HOST + url);
+            }
 
             HttpResponseMessage response = await _client.SendAsync(request);
 

@@ -32,9 +32,10 @@ namespace PizzaIllico.Mobile.ViewModels
 
 	    private async void SelectedActionAsync(ShopItem obj)
 	    {
-			await DependencyService.Get<INavigationService>().PushAsync<ConnexionPage>();
-
-		}
+		    Dictionary<string, Object> data = new Dictionary<string, Object>();
+		    data.Add("resto",obj);
+		    await DependencyService.Get<INavigationService>().PushAsync<RestoDetailsPage>(data);
+	    }
 
 		public override async Task OnResume()
         {
