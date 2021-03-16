@@ -8,7 +8,7 @@ namespace PizzaIllico.Mobile.Services
 {
     public interface IApiService
     {
-        Task<TResponse> Get<TResponse>(string url, string param = null);
+        Task<TResponse> Get<TResponse>(string url, string shopid = null);
         Task<TResponse> Post<TResponse, TData>(string url, TData data);
 
     }

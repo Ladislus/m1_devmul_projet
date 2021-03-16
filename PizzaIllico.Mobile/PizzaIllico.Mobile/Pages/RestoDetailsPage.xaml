@@ -20,6 +20,7 @@
 
             <ListView ItemsSource="{Binding Pizzas}" SelectionMode="None" HasUnevenRows="True"
             >
+                
                 <ListView.Behaviors>
                     <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}"/>
                 </ListView.Behaviors>
@@ -29,6 +30,11 @@
                             <ContentView Padding="10,10,0,10" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                                 <StackLayout>
                                     <Label FontSize="Title" FontAttributes="Bold" TextColor="SkyBlue"  Text="{Binding Name}"></Label>
+                                    <Frame CornerRadius="100"
+                                           HorizontalOptions="Center"
+                                           IsClippedToBounds="True">
+                                        <Image HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Aspect="AspectFit" Source="{Binding Linkimg}"></Image>
+                                    </Frame>
                                     <Label FontAttributes="Bold" Text="Ingredients"></Label>
                                     <Label Text="{Binding Description}"></Label>
                                     <StackLayout Orientation="Horizontal">

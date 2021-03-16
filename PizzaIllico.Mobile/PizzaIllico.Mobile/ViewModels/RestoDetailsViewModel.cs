@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PizzaIllico.Mobile.Dtos;
@@ -16,11 +17,20 @@ namespace PizzaIllico.Mobile.ViewModels
 {
     public class RestoDetailsViewModel : ViewModelBase
     {
+        private const string HOST = "https://pizza.julienmialon.ovh/";
+
 
         private string _nomResto, _adresse;
         private long _id;
         private ObservableCollection<PizzaItem> _pizzas;
         private ICommand _selectedCommand;
+        private ImageSource _image;
+
+        public ImageSource Image
+        {
+            get => _image;
+            set => SetProperty(ref _image, value);
+        }
 
         public RestoDetailsViewModel()
         {
@@ -75,9 +85,13 @@ namespace PizzaIllico.Mobile.ViewModels
             if (response.IsSuccess)
             {            
                 Console.WriteLine("Success de la requete des pizz");
-
                 Pizzas = new ObservableCollection<PizzaItem>(response.Data);
                 Console.WriteLine($"Appel HTTP (pizza): {response.Data.Count}");
+            }
+            
+            foreach (PizzaItem pizzaItem in Pizzas)
+            {
+                pizzaItem.Linkimg = HOST + Urls.GET_IMAGE.Replace("{shopId}",this._id.ToString()).Replace("{pizzaId}", pizzaItem.Id.ToString());
             }
         }
     }
