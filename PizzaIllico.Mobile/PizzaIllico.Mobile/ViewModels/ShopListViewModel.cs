@@ -31,10 +31,10 @@ namespace PizzaIllico.Mobile.ViewModels
 
 		private void SelectedAction(ShopItem obj)
 		{
-			GetLastPosAsync();
-		}
+			ShopListViewModel.GetLastPosAsync();
+        }
 
-		public async Task<Location> GetLastPosAsync()
+        public static async Task<Location> GetLastPosAsync()
 		{
 			try
 			{
@@ -43,8 +43,8 @@ namespace PizzaIllico.Mobile.ViewModels
 				if (location != null)
 				{
 					Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+					return location;
 				}
-				return location;
 			}
 			catch (FeatureNotSupportedException fnsEx)
 			{
@@ -62,7 +62,7 @@ namespace PizzaIllico.Mobile.ViewModels
 			{
 				// Unable to get location
 			}
-
+			return new Location(0.0, 0.0);
 		}
 
 
