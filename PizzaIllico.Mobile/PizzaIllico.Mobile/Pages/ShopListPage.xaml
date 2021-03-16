@@ -37,7 +37,11 @@
                                 <StackLayout>
                                     <Label FontSize="Title" FontAttributes="Bold"  Text="{Binding Name}"/>
                                     <Label Text="{Binding Address}"/>
-                                    <Label Text="{Binding DistanceResto}"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image HeightRequest="30" HorizontalOptions="Start" Source="logoDistance.png"/>
+                                        <Label Text="{Binding DistanceResto, StringFormat='{0:N3} Km'}"/>                                        
+                                    </StackLayout>
+                                    
                                 </StackLayout>
                             </ContentView>
                         </ViewCell>
