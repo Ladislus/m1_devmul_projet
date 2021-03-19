@@ -3,15 +3,16 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
             xmlns:pages="clr-namespace:PizzaIllico.Mobile.Pages" xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
             x:Class="PizzaIllico.Mobile.Pages.MainNavPage"
+            x:Name="tabbedMain"
+            
             NavigationPage.HasNavigationBar="False">
   <!--Pages can be added as references or inline-->
     <pages:ShopListPage/>
     <forms:BaseContentPage 
         Title="Maps"
         IconImageSource="MapsResto"
->
+    >
 
     </forms:BaseContentPage>
-    <pages:ProfileTabbedPage/>
-
+    <pages:ProfileTabbedPage x:Name="profilePage"/>
 </TabbedPage>

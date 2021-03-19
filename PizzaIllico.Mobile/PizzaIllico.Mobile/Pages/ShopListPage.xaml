@@ -12,20 +12,23 @@
                        Title="Liste"
                        IconImageSource="listeResto"
                        >
-        <StackLayout Margin="10">
-            <StackLayout Orientation="Horizontal">
-                <Image HeightRequest="30" Source="resto"></Image>
-                <Label TextColor="SkyBlue" Text="Restaurant disponible" FontSize="Title" FontAttributes="Bold"></Label>
-                <Image HeightRequest="30" Source="resto"></Image>
-            </StackLayout>
-
-            <Label Margin="0,10,0,0" Text="Voici la liste des restaurants disponible proche de chez vous"></Label>
-            <BoxView Color="Black"
-                     Margin="0,0,0,10"
-                     HorizontalOptions="FillAndExpand"
-                     HeightRequest="1"
-                     />
-            <ListView ItemsSource="{Binding Shops}" SelectionMode="None" HasUnevenRows="True"
+    <StackLayout Margin="10">
+        <StackLayout Orientation="Horizontal" >
+            <Image HeightRequest="30" Source="resto"></Image>
+            <Label TextColor="SkyBlue" Text="Restaurant disponible" FontSize="Title" FontAttributes="Bold"></Label>
+            <Image HeightRequest="30" Source="resto"></Image>
+        </StackLayout>
+        <Label AbsoluteLayout.LayoutFlags="PositionProportional"   Margin="0,10,0,0" Text="Voici la liste des restaurants disponible proche de chez vous"></Label>
+        <BoxView Color="Black"
+                 Margin="0,0,0,10"
+                 HorizontalOptions="FillAndExpand"
+                 HeightRequest="1"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"  
+        />
+    <AbsoluteLayout>
+        <ListView 
+                AbsoluteLayout.LayoutFlags="PositionProportional"  
+                ItemsSource="{Binding Shops}" SelectionMode="None" HasUnevenRows="True"
                   >
                 <ListView.Behaviors>
                     <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}"/>
@@ -42,10 +45,19 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+
             </ListView>
-        </StackLayout>
-    
-    
+            <Frame BackgroundColor="SkyBlue"
+                   CornerRadius="150"
+                   AbsoluteLayout.LayoutFlags="PositionProportional"  
+                   AbsoluteLayout.LayoutBounds=".95,.95,70,70">
+                <ImageButton Source="connexion" 
+                             BackgroundColor="Transparent"
+                             Command="{Binding GotoConnexion}"/>
+            </Frame>
+    </AbsoluteLayout>
+    </StackLayout>
+
 
 
 </forms:BaseContentPage>
