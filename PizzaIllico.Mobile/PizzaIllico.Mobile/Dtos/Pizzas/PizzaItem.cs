@@ -2,8 +2,10 @@ using Newtonsoft.Json;
 
 namespace PizzaIllico.Mobile.Dtos.Pizzas
 {
+
     public class PizzaItem
     {
+
         [JsonProperty("id")]
         public long Id { get; set; }
         
@@ -18,5 +20,11 @@ namespace PizzaIllico.Mobile.Dtos.Pizzas
         
         [JsonProperty("out_of_stock")]
         public bool OutOfStock { get; set; }
+
+        public string Linkimg
+        {
+            get;
+            set;
+        }
     }
 }

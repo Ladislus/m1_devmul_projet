@@ -15,7 +15,7 @@
         <StackLayout Margin="10">
             <StackLayout Orientation="Horizontal">
                 <Image HeightRequest="30" Source="resto"></Image>
-                <Label Text="Restaurant disponible" FontSize="Title" FontAttributes="Bold"></Label>
+                <Label TextColor="SkyBlue" Text="Restaurant disponible" FontSize="Title" FontAttributes="Bold"></Label>
                 <Image HeightRequest="30" Source="resto"></Image>
             </StackLayout>
 
@@ -32,7 +32,7 @@
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell x:DataType="pizzas:ShopItem" Height="200">
+                        <ViewCell x:DataType="pizzas:ShopItem">
                             <ContentView Padding="10,10,0,10" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
                                 <StackLayout>
                                     <Label FontSize="Title" FontAttributes="Bold"  Text="{Binding Name}"/>
@@ -41,7 +41,6 @@
                                         <Image HeightRequest="30" HorizontalOptions="Start" Source="logoDistance.png"/>
                                         <Label Text="{Binding DistanceResto, StringFormat='{0:N3} Km'}"/>                                        
                                     </StackLayout>
-                                    
                                 </StackLayout>
                             </ContentView>
                         </ViewCell>
