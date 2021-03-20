@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using PizzaIllico.Mobile.Services;
 using PizzaIllico.Mobile.ViewModels;
 using Storm.Mvvm;
 using Xamarin.Essentials;
@@ -32,7 +33,8 @@ namespace PizzaIllico.Mobile.Dtos.Pizzas
         {
             get
             {
-                Location pos = ShopListViewModel.GetLastPosAsync().Result;
+                GeoLocService geoloc = new GeoLocService();
+                Location pos = geoloc.GetLastPosAsync().Result;
                 Location resto = new Location(this.Latitude, this.Longitude);
                 _distance = pos.CalculateDistance(resto, DistanceUnits.Kilometers);
                 return _distance;

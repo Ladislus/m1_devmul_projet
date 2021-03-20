@@ -20,7 +20,7 @@ namespace PizzaIllico.Mobile.Pages
         public MapsResto()
         {
             InitializeComponent();
-           
+            BindingContext = new MapsViewModel();
         }
     }
 }

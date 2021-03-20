@@ -4,9 +4,11 @@
                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                        xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
                        xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+                       xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
+                       x:DataType="viewModels:MapsViewModel"
                        x:Class="PizzaIllico.Mobile.Pages.MapsResto"
                        NavigationPage.HasNavigationBar="False"
                        Title="Maps"
                        IconImageSource="MapsResto">
-    <maps:Map x:Name="map"/>
+    <ContentView Content="{Binding MapPos}"/>
 </forms:BaseContentPage>

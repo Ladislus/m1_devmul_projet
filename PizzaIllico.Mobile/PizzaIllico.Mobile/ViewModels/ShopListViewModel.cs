@@ -42,38 +42,7 @@ namespace PizzaIllico.Mobile.ViewModels
 		    await DependencyService.Get<INavigationService>().PushAsync<RestoDetailsPage>(data);
 	    }
 
-        public static async Task<Location> GetLastPosAsync()
-		{
-			try
-			{
-				var location = await Geolocation.GetLastKnownLocationAsync();
-
-				if (location != null)
-				{
-					Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
-					return location;
-				}
-			}
-			catch (FeatureNotSupportedException fnsEx)
-			{
-				// Handle not supported on device exception
-			}
-			catch (FeatureNotEnabledException fneEx)
-			{
-				// Handle not enabled on device exception
-			}
-			catch (PermissionException pEx)
-			{
-				// Handle permission exception
-			}
-			catch (Exception ex)
-			{
-				// Unable to get location
-			}
-			return new Location(0.0, 0.0);
-		}
-        
-		public override async Task OnResume()
+	    public override async Task OnResume()
         {
 	        await base.OnResume();
 
