@@ -7,9 +7,11 @@ using PizzaIllico.Mobile.Dtos.Pizzas;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
 using Xamarin.Essentials;
+using MapDrive =  Xamarin.Essentials.Map;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Map = Xamarin.Forms.Maps.Map;
+
 
 namespace PizzaIllico.Mobile.ViewModels
 {
@@ -20,7 +22,7 @@ namespace PizzaIllico.Mobile.ViewModels
         public Map MapPos
         {
             get => _mapPos;
-            set => SetProperty(ref _mapPos,value);
+            set => SetProperty(ref _mapPos, value);
         }
 
         public override async Task OnResume()
@@ -36,12 +38,12 @@ namespace PizzaIllico.Mobile.ViewModels
                 IsShowingUser = true,
                 MapType = MapType.Hybrid
             };
-            
+
             IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
 
             Response<List<ShopItem>> response = await service.ListShops();
             ObservableCollection<ShopItem> Shops;
-            
+
             Console.WriteLine($"Appel HTTP tom : {response.IsSuccess}");
             if (response.IsSuccess)
             {
@@ -49,14 +51,21 @@ namespace PizzaIllico.Mobile.ViewModels
                 Shops = new ObservableCollection<ShopItem>(response.Data);
                 for (int i = 0; i < Shops.Count; i++)
                 {
-                    Console.WriteLine($"addresse "+Shops[i].Address);
-                    MapPos.Pins.Add(new Pin
+                    Console.WriteLine($"addresse " + Shops[i].Address);
+                    Pin pin = new Pin
                     {
                         Label = Shops[i].Name,
                         Address = Shops[i].Address,
                         Type = PinType.Place,
-                        Position = new Position(Shops[i].Latitude,Shops[i].Longitude)
-                    });
+                        Position = new Position(Shops[i].Latitude, Shops[i].Longitude)
+                    };
+                    pin.Clicked += async (object sender, EventArgs e) =>
+                    {
+                        var location = new Location(pin.Position.Latitude, pin.Position.Longitude);
+                        var options =  new MapLaunchOptions { NavigationMode = NavigationMode.Driving };
+                        await MapDrive.OpenAsync(location,options);
+                    };
+                    MapPos.Pins.Add(pin);
                 }
             }
         }
