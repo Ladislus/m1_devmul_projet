@@ -4,6 +4,6 @@
              xmlns:mvvm="clr-namespace:Storm.Mvvm;assembly=Storm.Mvvm.Forms"
              x:Class="PizzaIllico.Mobile.App">
     <Application.Resources>
-
+        
     </Application.Resources>
 </mvvm:MvvmApplication>
