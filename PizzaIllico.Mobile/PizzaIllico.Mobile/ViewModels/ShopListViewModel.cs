@@ -37,6 +37,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
 	    private async void SelectedActionAsync(ShopItem obj)
 	    {
+		    Console.WriteLine("resto Shops: "+obj.Name);
 		    Dictionary<string, Object> data = new Dictionary<string, Object>();
 		    data.Add("resto",obj);
 		    await DependencyService.Get<INavigationService>().PushAsync<RestoDetailsPage>(data);

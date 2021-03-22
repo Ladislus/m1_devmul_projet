@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
+using PizzaIllico.Mobile.Pages;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
+using Storm.Mvvm.Services;
 using Xamarin.Essentials;
 using MapDrive =  Xamarin.Essentials.Map;
 using Xamarin.Forms;
@@ -24,6 +27,8 @@ namespace PizzaIllico.Mobile.ViewModels
             get => _mapPos;
             set => SetProperty(ref _mapPos, value);
         }
+        
+        public ICommand SelectedCommand { get; set; }
 
         public override async Task OnResume()
         {
@@ -51,19 +56,20 @@ namespace PizzaIllico.Mobile.ViewModels
                 Shops = new ObservableCollection<ShopItem>(response.Data);
                 for (int i = 0; i < Shops.Count; i++)
                 {
-                    Console.WriteLine($"addresse " + Shops[i].Address);
+                    ShopItem shopItem = Shops[i];
+                    Console.WriteLine($"addresse Maps " + shopItem.Address);
                     Pin pin = new Pin
                     {
-                        Label = Shops[i].Name,
-                        Address = Shops[i].Address,
+                        Label = shopItem.Name,
+                        Address = shopItem.Address,
                         Type = PinType.Place,
-                        Position = new Position(Shops[i].Latitude, Shops[i].Longitude)
+                        Position = new Position(shopItem.Latitude, shopItem.Longitude)
                     };
                     pin.Clicked += async (object sender, EventArgs e) =>
                     {
-                        var location = new Location(pin.Position.Latitude, pin.Position.Longitude);
-                        var options =  new MapLaunchOptions { NavigationMode = NavigationMode.Driving };
-                        await MapDrive.OpenAsync(location,options);
+                        Dictionary<string, Object> data = new Dictionary<string, Object>();
+                        data.Add("resto",shopItem);
+                        await DependencyService.Get<INavigationService>().PushAsync<RestoDetailsPage>(data);
                     };
                     MapPos.Pins.Add(pin);
                 }
