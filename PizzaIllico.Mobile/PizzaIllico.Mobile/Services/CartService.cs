@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using Xamarin.Forms;
@@ -8,19 +7,19 @@ namespace PizzaIllico.Mobile.Services
 {
     public interface ICartService
     {
-        Dictionary<ShopItem, List<PizzaItem>> Orders { get; }
+        Dictionary<long, List<PizzaItem>> Orders { get; }
         double Price { get; }
-        void AddPizza(ShopItem shop, PizzaItem pizza);
-        void RemovePizza(ShopItem shop, PizzaItem pizza);
+        void AddPizza(long shopId, PizzaItem pizza);
+        void RemovePizza(long shopId, PizzaItem pizza);
         void Order();
     }
 
     public class CartService : ICartService
     {
-        private readonly Dictionary<ShopItem, List<PizzaItem>> _orders = new();
+        private readonly Dictionary<long, List<PizzaItem>> _orders = new();
         private readonly IApiService _apiService;
 
-        public Dictionary<ShopItem, List<PizzaItem>> Orders => _orders;
+        public Dictionary<long, List<PizzaItem>> Orders => _orders;
 
         public double Price
         {
@@ -44,20 +43,20 @@ namespace PizzaIllico.Mobile.Services
             _apiService = DependencyService.Get<IApiService>();
         }
 
-        public void AddPizza(ShopItem shop, PizzaItem pizza)
+        public void AddPizza(long shopId, PizzaItem pizza)
         {
-            if (!_orders.ContainsKey(shop))
+            if (!_orders.ContainsKey(shopId))
             {
-                _orders.Add(shop, new List<PizzaItem>());
+                _orders.Add(shopId, new List<PizzaItem>());
             }
-            _orders[shop].Add(pizza);
+            _orders[shopId].Add(pizza);
         }
 
-        public void RemovePizza(ShopItem shop, PizzaItem pizza)
+        public void RemovePizza(long shopId, PizzaItem pizza)
         {
-            if (_orders.ContainsKey(shop))
+            if (_orders.ContainsKey(shopId))
             {
-                _orders[shop].Remove(pizza);
+                _orders[shopId].Remove(pizza);
             }
         }
 
@@ -78,14 +77,6 @@ namespace PizzaIllico.Mobile.Services
                         PizzaIds = pizzaids
                     }
                     );
-                if (response.IsSuccess)
-                {
-                    Console.WriteLine("\n\n" + response.Data.Shop.Id + " is Ok\n\n");
-                }
-                else
-                {
-                    Console.WriteLine("\n\n" + response.Data.Shop.Id + " is false\n\n");
-                }
             }
         }
     }

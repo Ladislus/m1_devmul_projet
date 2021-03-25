@@ -21,6 +21,7 @@
                          HorizontalOptions="FillAndExpand"
                          HeightRequest="1"
                          />
+                <Label TextColor="Crimson" Text="{Binding Price, StringFormat='Prix total : {0}€'}"/>
                 <ListView ItemsSource="{Binding Cart}" SelectionMode="None" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -29,7 +30,7 @@
                                     <StackLayout>
                                         <Label FontSize="Title" FontAttributes="Bold"  Text="{Binding .Name}"/>
                                         <Label Text="{Binding Description}"/>
-                                        <Label Text="{Binding Price}"/>
+                                        <Label Text="{Binding Price, StringFormat='{0}€'}"/>
                                     </StackLayout>
                                 </ContentView>
                             </ViewCell>
@@ -39,14 +40,3 @@
             </StackLayout>
     </ContentPage.Content>
 </forms:BaseContentPage>
-<!-- <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" -->
-<!--              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" -->
-<!--              x:Class="PizzaIllico.Mobile.Pages.CartPage"> -->
-<!--     <ContentPage.Content> -->
-<!--         <StackLayout> -->
-<!--             <Label Text="Hello, world!" -->
-<!--                    VerticalOptions="CenterAndExpand" -->
-<!--                    HorizontalOptions="CenterAndExpand" /> -->
-<!--         </StackLayout> -->
-<!--     </ContentPage.Content> -->
-<!-- </ContentPage> -->

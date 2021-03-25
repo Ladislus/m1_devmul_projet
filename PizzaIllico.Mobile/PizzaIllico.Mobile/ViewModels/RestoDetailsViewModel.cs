@@ -23,7 +23,6 @@ namespace PizzaIllico.Mobile.ViewModels
         private string _nomResto, _adresse;
         private long _id;
         private ObservableCollection<PizzaItem> _pizzas;
-        private ICommand _selectedCommand;
         private ImageSource _image;
 
         public ImageSource Image
@@ -34,7 +33,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public RestoDetailsViewModel()
         {
-            SelectedCommand = new Command(onPizza);
+            SelectedCommand = new Command<PizzaItem>(OnPizza);
         } 
         
         public override void Initialize(Dictionary<string, object> navigationParameters)
@@ -52,9 +51,9 @@ namespace PizzaIllico.Mobile.ViewModels
             get;
         }
         
-        public void onPizza()
+        public void OnPizza(PizzaItem pizzaItem)
         {
-            
+            DependencyService.Get<ICartService>().AddPizza(_id, pizzaItem);
         }
         //Properties
         public ObservableCollection<PizzaItem> Pizzas

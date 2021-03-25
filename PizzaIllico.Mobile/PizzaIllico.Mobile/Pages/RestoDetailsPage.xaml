@@ -5,7 +5,9 @@
              xmlns:extensions="clr-namespace:PizzaIllico.Mobile.Extensions;assembly=PizzaIllico.Mobile"
              xmlns:pizzas="clr-namespace:PizzaIllico.Mobile.Dtos.Pizzas;assembly=PizzaIllico.Mobile"
              xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
+             xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
              Title="{Binding NomResto}"
+             x:DataType="viewModels:RestoDetailsViewModel"
              x:Class="PizzaIllico.Mobile.Pages.RestoDetailsPage">
     <ContentPage.Content>
         <StackLayout Padding="10,10,10,10">
@@ -18,11 +20,10 @@
             />
             <Label Padding="10,10,0,10" FontAttributes="Bold" FontSize="Title" TextColor="SkyBlue" Text="Listes des pizzas du resto "></Label>
 
-            <ListView ItemsSource="{Binding Pizzas}" SelectionMode="None" HasUnevenRows="True"
-            >
+            <ListView ItemsSource="{Binding Pizzas}" SelectionMode="None" HasUnevenRows="True">
                 
                 <ListView.Behaviors>
-                    <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}"/>
+                    <extensions:ListViewItemTappedBehavior Command="{Binding SelectedCommand}" CommandParameter="{Binding .}"/>
                 </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>

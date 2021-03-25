@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
@@ -15,21 +17,25 @@ namespace PizzaIllico.Mobile.ViewModels
             set => SetProperty(ref _cart, value);
         }
 
-        public double Price { get; }
-
-        public CartViewModel()
+        private double _price;
+        public double Price
         {
-            var cartService = DependencyService.Get<ICartService>();
-            Price = cartService.Price;
+            get => _price;
+            set => SetProperty(ref _price, value);
+        }
 
-            _cart = new ObservableCollection<PizzaItem>();
-            foreach (var pair in cartService.Orders)
+        public override async Task OnResume()
+        {
+            await base.OnResume();
+            ICartService cartService = DependencyService.Get<ICartService>();
+            ObservableCollection<PizzaItem> items = new();
+            foreach (var pizza in cartService.Orders.Values.SelectMany(pizzas => pizzas))
             {
-                foreach (var pizza in pair.Value)
-                {
-                    _cart.Add(pizza);
-                }
+                items.Add(pizza);
             }
+
+            Cart = items;
+            Price = cartService.Price;
         }
     }
 }
