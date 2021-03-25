@@ -93,10 +93,10 @@ namespace PizzaIllico.Mobile.Services
                 {
                     if (response.ErrorCode == "PIZZA_OUT_OF_STOCK")
                     {
-                        // TODO
                         DependencyService.Get<IToast>().LongAlert(response.ErrorMessage);
                         toRemove.Add(pair.Key);
                     }
+                    // TODO
                 }
             }
 
