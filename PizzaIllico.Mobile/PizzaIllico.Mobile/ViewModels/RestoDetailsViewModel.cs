@@ -51,9 +51,19 @@ namespace PizzaIllico.Mobile.ViewModels
             get;
         }
         
-        public void OnPizza(PizzaItem pizzaItem)
+        public async void OnPizza(PizzaItem pizzaItem)
         {
-            DependencyService.Get<ICartService>().AddPizza(_id, pizzaItem);
+            var response = await DependencyService.Get<IDialogService>()
+                .DisplayAlertAsync(
+                    "Ajout pizza",
+                    "Êtes vous sûr de vouloir ajouter '" + pizzaItem.Name + "' à votre panier ?",
+                    "Oui",
+                    "Non"
+                );
+            if (response)
+            {
+                DependencyService.Get<ICartService>().AddPizza(_id, pizzaItem);
+            }
         }
         //Properties
         public ObservableCollection<PizzaItem> Pizzas
