@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PizzaIllico.Mobile.Controls;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using Xamarin.Forms;
@@ -88,15 +89,15 @@ namespace PizzaIllico.Mobile.Services
                     Console.WriteLine("Request " + pair.Key + " successfull");
                     toRemove.Add(pair.Key);
                 }
-#if DEBUG
                 else
                 {
-                    Console.WriteLine("Order " + pair.Key + " failed, with error :");
-                    Console.WriteLine("-> " + response.Data);
-                    Console.WriteLine("-> " + response.ErrorCode);
-                    Console.WriteLine("-> " + response.ErrorMessage);
+                    if (response.ErrorCode == "PIZZA_OUT_OF_STOCK")
+                    {
+                        // TODO
+                        DependencyService.Get<IToast>().LongAlert(response.ErrorMessage);
+                        toRemove.Add(pair.Key);
+                    }
                 }
-#endif
             }
 
             foreach (var shopId in toRemove)

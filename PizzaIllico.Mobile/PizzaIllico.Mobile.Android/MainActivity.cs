@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using PizzaIllico.Mobile.Controls;
+using Xamarin.Forms;
 
 [assembly: UsesPermission(Android.Manifest.Permission.AccessCoarseLocation)]
 [assembly: UsesPermission(Android.Manifest.Permission.AccessFineLocation)]
@@ -20,7 +22,8 @@ namespace PizzaIllico.Mobile.Android
 
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Forms.Init(this, savedInstanceState);
+            DependencyService.Register<IToast, MessageAndroid>();
             Xamarin.FormsMaps.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
