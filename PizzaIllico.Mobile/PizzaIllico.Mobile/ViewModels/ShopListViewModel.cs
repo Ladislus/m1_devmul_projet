@@ -30,11 +30,21 @@ namespace PizzaIllico.Mobile.ViewModels
 
 		public ICommand SelectedCommand { get; }
 
+		public ICommand GotoConnexion
+		{
+			get;
+		}
 	    public ShopListViewModel()
 	    { 
 		    SelectedCommand = new Command<ShopItem>(SelectedActionAsync);
+		    GotoConnexion = new Command(gotoConnexion);
 	    }
 
+	    public async void gotoConnexion()
+	    {
+		    await DependencyService.Get<INavigationService>().PushAsync<ConnexionPage>();
+
+	    }
 	    private async void SelectedActionAsync(ShopItem obj)
 	    {
 		    Console.WriteLine("resto Shops: "+obj.Name);
