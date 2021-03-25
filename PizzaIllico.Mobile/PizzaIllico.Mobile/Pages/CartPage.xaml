@@ -5,11 +5,12 @@
                        xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
                        xmlns:viewModels="clr-namespace:PizzaIllico.Mobile.ViewModels;assembly=PizzaIllico.Mobile"
                        xmlns:pizzas="clr-namespace:PizzaIllico.Mobile.Dtos.Pizzas;assembly=PizzaIllico.Mobile"
+                       xmlns:extensions="clr-namespace:PizzaIllico.Mobile.Extensions;assembly=PizzaIllico.Mobile"
                        x:DataType="viewModels:CartViewModel"
                        x:Class="PizzaIllico.Mobile.Pages.CartPage"
                        NavigationPage.HasNavigationBar="False"
                        Title="Panier"
-                       IconImageSource="MapsResto">
+                       IconImageSource="cart">
     <ContentPage.Content>
      <StackLayout Margin="10">
                 <StackLayout Orientation="Horizontal">
@@ -21,8 +22,18 @@
                          HorizontalOptions="FillAndExpand"
                          HeightRequest="1"
                          />
-                <Label TextColor="Crimson" Text="{Binding Price, StringFormat='Prix total : {0}€'}"/>
+                <Label TextColor="Crimson"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Text="{Binding Price, StringFormat='Prix total : {0}€'}"/>
+                <Button
+                    IsVisible="{Binding ShouldBeVisible}"
+                    Text="Commander"
+                    Command="{Binding OrderCommand}"/>
                 <ListView ItemsSource="{Binding Cart}" SelectionMode="None" HasUnevenRows="True">
+                    <ListView.Behaviors>
+                        <extensions:ListViewItemTappedBehavior Command="{Binding .DeleteCommand}" CommandParameter="{Binding .}"/>
+                    </ListView.Behaviors>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell x:DataType="pizzas:PizzaItem">
@@ -30,7 +41,7 @@
                                     <StackLayout>
                                         <Label FontSize="Title" FontAttributes="Bold"  Text="{Binding .Name}"/>
                                         <Label Text="{Binding Description}"/>
-                                        <Label Text="{Binding Price, StringFormat='{0}€'}"/>
+                                        <Label HorizontalOptions="Center" Text="{Binding Price, StringFormat='{0}€'}"/>
                                     </StackLayout>
                                 </ContentView>
                             </ViewCell>

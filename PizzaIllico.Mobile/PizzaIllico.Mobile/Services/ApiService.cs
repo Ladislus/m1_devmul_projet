@@ -1,15 +1,16 @@
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Xamarin.Essentials;
 
 namespace PizzaIllico.Mobile.Services
 {
     public interface IApiService
     {
         Task<TResponse> Get<TResponse>(string url, string shopid = null);
-        Task<TResponse> Post<TResponse, TData>(string url, TData data);
-
+        Task<TResponse> Post<TResponse, TData>(string url, TData data, bool isLogged = false);
     }
 
     public class ApiService : IApiService
@@ -38,7 +39,7 @@ namespace PizzaIllico.Mobile.Services
             return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
-        public async Task<TResponse> Post<TResponse, TData>(string url, TData data)
+        public async Task<TResponse> Post<TResponse, TData>(string url, TData data, bool isLogged = false)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(data), System.Text.Encoding.UTF8, "application/json");
 
@@ -48,6 +49,16 @@ namespace PizzaIllico.Mobile.Services
                 RequestUri = new Uri(HOST + url),
                 Content = content
             };
+
+            if (isLogged)
+            {
+                String token = await SecureStorage.GetAsync("access_token");
+                Console.WriteLine("TOKEN : " + token);
+                if (token != null)
+                {
+                    request.Headers.Authorization = new AuthenticationHeaderValue(token);
+                }
+            }
 
             HttpResponseMessage response = await _client.SendAsync(request);
 

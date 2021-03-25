@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using Xamarin.Forms;
@@ -10,13 +11,13 @@ namespace PizzaIllico.Mobile.Services
         Dictionary<long, List<PizzaItem>> Orders { get; }
         double Price { get; }
         void AddPizza(long shopId, PizzaItem pizza);
-        void RemovePizza(long shopId, PizzaItem pizza);
+        void RemovePizza(PizzaItem pizza);
         void Order();
     }
 
     public class CartService : ICartService
     {
-        private readonly Dictionary<long, List<PizzaItem>> _orders = new();
+        private Dictionary<long, List<PizzaItem>> _orders = new();
         private readonly IApiService _apiService;
 
         public Dictionary<long, List<PizzaItem>> Orders => _orders;
@@ -52,11 +53,11 @@ namespace PizzaIllico.Mobile.Services
             _orders[shopId].Add(pizza);
         }
 
-        public void RemovePizza(long shopId, PizzaItem pizza)
+        public void RemovePizza(PizzaItem pizza)
         {
-            if (_orders.ContainsKey(shopId))
+            foreach (var pizzas in _orders.Values)
             {
-                _orders[shopId].Remove(pizza);
+                pizzas.Remove(pizza);
             }
         }
 
@@ -71,13 +72,35 @@ namespace PizzaIllico.Mobile.Services
                 }
 
                 Response<OrderItem> response = await _apiService.Post<Response<OrderItem>, CreateOrderRequest>(
-                    Urls.DO_ORDER,
+                    Urls.DO_ORDER.Replace("{shopId}", pair.Key.ToString()),
                     new CreateOrderRequest
                     {
                         PizzaIds = pizzaids
-                    }
+                    },
+                    true
                     );
+                if (response.IsSuccess)
+                {
+                    _orders.Remove(pair.Key);
+#if DEBUG
+         Console.WriteLine("Order " + pair.Key + " successfully completed and cleared");
+#endif
+                }
+#if DEBUG
+                else
+                {
+                    Console.WriteLine("Order " + pair.Key + " failed, with error :");
+                    Console.WriteLine("-> " + response.Data);
+                    Console.WriteLine("-> " + response.ErrorCode);
+                    Console.WriteLine("-> " + response.ErrorMessage);
+                }
+#endif
+
             }
+#if DEBUG
+            Console.WriteLine("Called Order");
+            Console.WriteLine("_orders size : " + _orders.Count);
+#endif
         }
     }
 }
