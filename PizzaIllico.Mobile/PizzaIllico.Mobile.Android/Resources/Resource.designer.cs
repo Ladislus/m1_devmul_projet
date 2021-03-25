@@ -12360,7 +12360,11 @@ namespace PizzaIllico.Mobile.Android
 			public const int ic_vol_unmute = 2131165499;
 			
 			// aapt resource value: 0x7F07013C
+<<<<<<< HEAD
 			public const int listeResto = 2131165500;
+=======
+			public const int logoDistance = 2131165500;
+>>>>>>> 3c6faf78dcf1d913d4c80aac32ed414b6aca5de2
 			
 			// aapt resource value: 0x7F07013D
 			public const int MapsResto = 2131165501;

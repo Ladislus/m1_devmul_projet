@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PizzaIllico.Mobile.Dtos;
@@ -8,7 +9,11 @@ using PizzaIllico.Mobile.Dtos.Pizzas;
 using PizzaIllico.Mobile.Pages;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
+
+using Xamarin.Essentials;
+
 using Storm.Mvvm.Services;
+
 using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.ViewModels
@@ -19,8 +24,8 @@ namespace PizzaIllico.Mobile.ViewModels
 
 	    public ObservableCollection<ShopItem> Shops
 	    {
-		    get => _shops;
-		    set => SetProperty(ref _shops, value);
+            get => _shops;
+			set => SetProperty(ref _shops, value);
 	    }
 
 		public ICommand SelectedCommand { get; }
@@ -30,7 +35,7 @@ namespace PizzaIllico.Mobile.ViewModels
 			get;
 		}
 	    public ShopListViewModel()
-	    {
+	    { 
 		    SelectedCommand = new Command<ShopItem>(SelectedActionAsync);
 		    GotoConnexion = new Command(gotoConnexion);
 	    }
@@ -42,12 +47,13 @@ namespace PizzaIllico.Mobile.ViewModels
 	    }
 	    private async void SelectedActionAsync(ShopItem obj)
 	    {
+		    Console.WriteLine("resto Shops: "+obj.Name);
 		    Dictionary<string, Object> data = new Dictionary<string, Object>();
 		    data.Add("resto",obj);
 		    await DependencyService.Get<INavigationService>().PushAsync<RestoDetailsPage>(data);
 	    }
 
-		public override async Task OnResume()
+	    public override async Task OnResume()
         {
 	        await base.OnResume();
 
@@ -60,6 +66,7 @@ namespace PizzaIllico.Mobile.ViewModels
 	        {
 		        Console.WriteLine($"Appel HTTP : {response.Data.Count}");
 				Shops = new ObservableCollection<ShopItem>(response.Data);
+				Shops = new ObservableCollection<ShopItem>(Shops.OrderBy(a => a.DistanceResto));
 	        }
         }
     }

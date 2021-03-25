@@ -7,12 +7,7 @@
             
             NavigationPage.HasNavigationBar="False">
   <!--Pages can be added as references or inline-->
-    <pages:ShopListPage/>
-    <forms:BaseContentPage 
-        Title="Maps"
-        IconImageSource="MapsResto"
-    >
-
-    </forms:BaseContentPage>
-    <pages:ProfileTabbedPage x:Name="profilePage"/>
+  <pages:ShopListPage/>
+  <pages:MapsResto/>
+  <pages:ProfileTabbedPage x:Name="profilePage"/>
 </TabbedPage>
