@@ -35,7 +35,7 @@ namespace PizzaIllico.Mobile.Dtos.Pizzas
             {
                 GeoLocService geoloc = new GeoLocService();
                 Location pos = geoloc.GetLastPosAsync().Result;
-                Location resto = new Location(this.Latitude, this.Longitude);
+                Location resto = new Location(Latitude, Longitude);
                 _distance = pos.CalculateDistance(resto, DistanceUnits.Kilometers);
                 return _distance;
             }

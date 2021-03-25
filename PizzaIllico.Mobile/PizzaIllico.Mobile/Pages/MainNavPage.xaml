@@ -7,6 +7,7 @@
   <!--Pages can be added as references or inline-->
     <pages:ShopListPage/>
     <pages:MapsResto/>
+    <pages:CartPage/>
     <pages:ProfileTabbedPage/>
 
 </TabbedPage>
