@@ -53,10 +53,15 @@ namespace PizzaIllico.Mobile.Services
             if (isLogged)
             {
                 String token = await SecureStorage.GetAsync("access_token");
-                Console.WriteLine("TOKEN : " + token);
-                if (token != null)
+                String tokenType = await SecureStorage.GetAsync("token_type");
+                if (token != null && tokenType != null)
                 {
-                    request.Headers.Authorization = new AuthenticationHeaderValue(token);
+                    request.Headers.Authorization = new AuthenticationHeaderValue(tokenType, token);
+                }
+                else
+                {
+                    Console.WriteLine("NOTIMPLEMENTED !");
+                    // TODO try refresh, if unssuccessful, logout
                 }
             }
 

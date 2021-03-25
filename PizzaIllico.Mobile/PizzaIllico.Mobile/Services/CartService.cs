@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using Xamarin.Forms;
@@ -12,7 +13,7 @@ namespace PizzaIllico.Mobile.Services
         double Price { get; }
         void AddPizza(long shopId, PizzaItem pizza);
         void RemovePizza(PizzaItem pizza);
-        void Order();
+        Task Order();
     }
 
     public class CartService : ICartService
@@ -61,8 +62,11 @@ namespace PizzaIllico.Mobile.Services
             }
         }
 
-        public async void Order()
+        public async Task Order()
         {
+
+            List<long> toRemove = new();
+
             foreach (var pair in _orders)
             {
                 List<long> pizzaids = new();
@@ -81,10 +85,8 @@ namespace PizzaIllico.Mobile.Services
                     );
                 if (response.IsSuccess)
                 {
-                    _orders.Remove(pair.Key);
-#if DEBUG
-         Console.WriteLine("Order " + pair.Key + " successfully completed and cleared");
-#endif
+                    Console.WriteLine("Request " + pair.Key + " successfull");
+                    toRemove.Add(pair.Key);
                 }
 #if DEBUG
                 else
@@ -95,12 +97,12 @@ namespace PizzaIllico.Mobile.Services
                     Console.WriteLine("-> " + response.ErrorMessage);
                 }
 #endif
-
             }
-#if DEBUG
-            Console.WriteLine("Called Order");
-            Console.WriteLine("_orders size : " + _orders.Count);
-#endif
+
+            foreach (var shopId in toRemove)
+            {
+                _orders.Remove(shopId);
+            }
         }
     }
 }

@@ -13,6 +13,9 @@ namespace PizzaIllico.Mobile.ViewModels
 {
     public class CartViewModel : ViewModelBase
     {
+        private readonly ICartService _cartService = DependencyService.Get<ICartService>();
+        private readonly IDialogService _dialogService = DependencyService.Get<IDialogService>();
+
         private ObservableCollection<PizzaItem> _cart;
         public ObservableCollection<PizzaItem> Cart
         {
@@ -54,8 +57,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
             Console.WriteLine("DeletePizza " + pizza.Id);
 
-            var response = await DependencyService.Get<IDialogService>()
-                .DisplayAlertAsync(
+            var response = await _dialogService.DisplayAlertAsync(
                     "Supprimer",
                     "Êtes vous sûr de vouloir supprimer " + pizza.Name + " de la liste ?",
                     "Oui",
@@ -63,15 +65,14 @@ namespace PizzaIllico.Mobile.ViewModels
                 );
             if (response)
             {
-                DependencyService.Get<ICartService>().RemovePizza(pizza);
+                _cartService.RemovePizza(pizza);
                 SetCart();
             }
         }
 
         public async void OrderCart()
         {
-            var response = await DependencyService.Get<IDialogService>()
-                .DisplayAlertAsync(
+            var response = await _dialogService.DisplayAlertAsync(
                     "Commander",
                     "Êtes vous sûr de vouloir commander pour un total de " + Price + "€ ?",
                     "Oui",
@@ -79,28 +80,22 @@ namespace PizzaIllico.Mobile.ViewModels
                 );
             if (response)
             {
-                DependencyService.Get<ICartService>().Order();
+                await _cartService.Order();
                 SetCart();
             }
         }
 
         private void SetCart()
         {
-            ICartService cartService = DependencyService.Get<ICartService>();
             ObservableCollection<PizzaItem> items = new();
-            foreach (var pizza in cartService.Orders.Values.SelectMany(pizzas => pizzas))
+            foreach (var pizza in _cartService.Orders.Values.SelectMany(pizzas => pizzas))
             {
                 items.Add(pizza);
             }
 
             Cart = items;
-            Price = cartService.Price;
+            Price = _cartService.Price;
             ShouldBeVisible = Cart.Count > 0;
-
-#if DEBUG
-            Console.WriteLine("Called SetCart");
-            Console.WriteLine("Cart size : " + Cart.Count);
-#endif
         }
     }
 }
