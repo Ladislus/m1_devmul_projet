@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Drawable\cart.png" />
+    <AndroidResource Include="Resources\Drawable\connexion.png" />
     <AndroidResource Include="Resources\Drawable\logoDistance.png" />
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
     <AndroidResource Include="Resources\layout\Toolbar.axml" />

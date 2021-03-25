@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<forms:BaseContentPage   
+<forms:BaseContentPage  
                         xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:forms="clr-namespace:Storm.Mvvm.Forms;assembly=Storm.Mvvm.Forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"   
@@ -8,7 +8,8 @@
                         IconImageSource="setting"
 >
     <StackLayout Padding="10,10,10,0" HorizontalOptions="FillAndExpand">
-            <Label Text="Gestion du profil"  FontSize="Title" FontAttributes="Bold"/>
+        <Button BackgroundColor="SkyBlue" Text="Deconnexion" Command="{Binding OnDeco}"></Button>
+        <Label Text="Gestion du profil"  FontSize="Title" FontAttributes="Bold"/>
             <Label Text="Vous pouvez changer votre mot de passe ici !"/>
             <BoxView Color="Black"
                          Margin="0,0,0,10"
@@ -28,5 +29,7 @@
             <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"></Entry>
         </FlexLayout>
         <Button Text="Confirmer" BackgroundColor="SkyBlue"></Button>
+        <Label TextColor="Firebrick" Text="{Binding ErrorMsg}"></Label>
+
     </StackLayout>
 </forms:BaseContentPage>
