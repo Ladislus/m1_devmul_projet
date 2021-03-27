@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PizzaIllico.Mobile.Dtos;
 using Xamarin.Essentials;
 
 namespace PizzaIllico.Mobile.Services

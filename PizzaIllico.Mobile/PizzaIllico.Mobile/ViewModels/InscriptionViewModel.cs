@@ -2,16 +2,12 @@
 using Storm.Mvvm;
 using Storm.Mvvm.Services;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Windows.Input;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Authentications;
 using PizzaIllico.Mobile.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace PizzaIllico.Mobile.ViewModels
 {
@@ -70,15 +66,10 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public async void inscription()
         {
-            Console.WriteLine(Login);
-            Console.WriteLine(Motdepasse);
-            Console.WriteLine(Motdepasse2);
             if (Motdepasse == Motdepasse2)
             {
                 IUserService service = DependencyService.Get<IUserService>();
                 Response<LoginResponse> response = await service.Register(Login, Prenom, Nom, PhoneNum, Motdepasse);
-
-                Console.WriteLine($"Appel HTTP : {response.IsSuccess}");
                 if (response.IsSuccess)
                 {
                     try

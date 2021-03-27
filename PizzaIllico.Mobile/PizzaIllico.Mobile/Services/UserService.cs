@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using PizzaIllico.Mobile.Dtos;
+﻿using PizzaIllico.Mobile.Dtos;
 using System.Threading.Tasks;
 using PizzaIllico.Mobile.Dtos.Accounts;
 using PizzaIllico.Mobile.Dtos.Authentications;

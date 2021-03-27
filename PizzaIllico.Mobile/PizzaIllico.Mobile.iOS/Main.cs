@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Foundation;
+﻿using PizzaIllico.Mobile.Controls;
 using UIKit;
+using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.iOS
 {
@@ -13,6 +11,7 @@ namespace PizzaIllico.Mobile.iOS
         {
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
+            DependencyService.Register<IToast, MessageIOS>();
             UIApplication.Main(args, null, "AppDelegate");
         }
     }
