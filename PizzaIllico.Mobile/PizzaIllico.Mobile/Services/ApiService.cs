@@ -35,6 +35,7 @@ namespace PizzaIllico.Mobile.Services
             SecureStorage.Remove("token_type");
             SecureStorage.Remove("login");
             SecureStorage.Remove("password");
+            //TODO GoToHome page
         }
 
         private async Task<bool> NeedRefresh()
@@ -61,24 +62,16 @@ namespace PizzaIllico.Mobile.Services
 
         private async void Refresh()
         {
-            String refresh_token = await SecureStorage.GetAsync("refresh_token");
+            String refreshToken = await SecureStorage.GetAsync("refresh_token");
             String login = await SecureStorage.GetAsync("password");
             String password = await SecureStorage.GetAsync("password");
-            StringContent content = new StringContent(JsonConvert.SerializeObject(new RefreshRequest
-            {
-                ClientId = login,
-                ClientSecret = password,
-                RefreshToken = refresh_token
-            }), System.Text.Encoding.UTF8, "application/json");
-            HttpRequestMessage requestMessage = new HttpRequestMessage
-            {
-                Content = content,
-                Method = HttpMethod.Post,
-                RequestUri = new Uri(HOST + Urls.REFRESH_TOKEN)
-            };
-
-            string responseContent = await (await _client.SendAsync(requestMessage)).Content.ReadAsStringAsync();
-            Response<LoginResponse> loginResponse = JsonConvert.DeserializeObject<Response<LoginResponse>>(responseContent);
+            Response<LoginResponse> loginResponse = await Post<Response<LoginResponse>, RefreshRequest>(Urls.REFRESH_TOKEN,
+                new RefreshRequest
+                {
+                    ClientId = login,
+                    ClientSecret = password,
+                    RefreshToken = refreshToken
+                }, true);
 #if DEBUG
             Console.WriteLine(loginResponse.IsSuccess);
             Console.WriteLine(loginResponse.ErrorCode);
