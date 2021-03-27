@@ -6,6 +6,7 @@ using Storm.Mvvm;
 using Storm.Mvvm.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +65,9 @@ namespace PizzaIllico.Mobile.ViewModels
                     await SecureStorage.SetAsync("token_type", response.Data.TokenType);
                     await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
                     await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
+                    await SecureStorage.SetAsync("expire_in", DateTime.Now.AddSeconds(response.Data.ExpiresIn).Ticks.ToString());
+                    await SecureStorage.SetAsync("login", Login);
+                    await SecureStorage.SetAsync("password", Motdepasse);
                     gotoHomeList();
 
                 }

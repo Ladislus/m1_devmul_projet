@@ -31,7 +31,7 @@ namespace PizzaIllico.Mobile.ViewModels
             OnDeco = new Command(onDeco);
         }
 
-        public void onDeco()
+        public async void onDeco()
         {
             ErrorMsg = "onDeco";
             try
@@ -39,7 +39,8 @@ namespace PizzaIllico.Mobile.ViewModels
                 SecureStorage.Remove("access_token");
                 SecureStorage.Remove("refresh_token");
                 SecureStorage.Remove("token_type");
-
+                SecureStorage.Remove("login");
+                SecureStorage.Remove("password");
             }
             catch (Exception ex)
             {
