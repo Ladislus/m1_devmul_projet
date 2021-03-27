@@ -52,6 +52,7 @@
 
             </ListView>
         <Frame BackgroundColor="SkyBlue"
+               IsVisible="{Binding DisplayConnection}"
                CornerRadius="150"
                AbsoluteLayout.LayoutFlags="PositionProportional"  
                AbsoluteLayout.LayoutBounds=".95,.95,70,70">

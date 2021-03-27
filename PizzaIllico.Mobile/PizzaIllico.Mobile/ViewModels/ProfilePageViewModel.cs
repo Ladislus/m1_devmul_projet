@@ -38,6 +38,7 @@ namespace PizzaIllico.Mobile.ViewModels
             {
                 SecureStorage.Remove("access_token");
                 SecureStorage.Remove("refresh_token");
+                SecureStorage.Remove("token_type");
 
             }
             catch (Exception ex)
