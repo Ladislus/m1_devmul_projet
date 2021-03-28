@@ -58,21 +58,29 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public async void onChangeMdp()
         {
-            IUserService service = DependencyService.Get<IUserService>();
-            SetPasswordRequest obj = new SetPasswordRequest();
-            obj.OldPassword = OldMdp;
-            obj.NewPassword = NewMdp2;
-            Response response = await service.ChangePassword(obj);
-            if (response.IsSuccess)
+            //On change le mdp de l'utilsateur
+            if (NewMdp == NewMdp2)
             {
-                ErrorMsg = "Mot de passe changé.";
+                IUserService service = DependencyService.Get<IUserService>();
+                SetPasswordRequest obj = new SetPasswordRequest();
+                obj.OldPassword = OldMdp;
+                obj.NewPassword = NewMdp2;
+                Response response = await service.ChangePassword(obj);
+                if (response.IsSuccess)
+                {
+                    ErrorMsg = "Mot de passe changé.";
                 
+                }
+                else
+                {
+                    ErrorMsg = response.ErrorMessage;
+                }
             }
             else
             {
-                ErrorMsg = response.ErrorMessage;
+                ErrorMsg = "Les deux mot de passe doivent correspondre.";
             }
-            
+
         }
 
         private void onDeco()
