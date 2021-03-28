@@ -19,17 +19,17 @@
                          />
         <FlexLayout Direction="Row" AlignItems="Center"  Wrap="Wrap" HorizontalOptions="FillAndExpand">
             <Label Text="Mot de passe actuel : " FontAttributes="Bold"></Label>
-            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"></Entry>
+            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"  Text="{Binding OldMdp}"></Entry>
         </FlexLayout>
         <FlexLayout Direction="Row" AlignItems="Center"  Wrap="Wrap" HorizontalOptions="FillAndExpand">
             <Label Text="Changer de mot de passe : " FontAttributes="Bold"></Label>
-            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"></Entry>
+            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"  Text="{Binding NewMdp}"></Entry>
         </FlexLayout>
         <FlexLayout Direction="Row" AlignItems="Center">
             <Label Text="Confirmer le mot de passe : " FontAttributes="Bold"></Label>
-            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1"></Entry>
+            <Entry IsPassword="True" Placeholder="******"  FlexLayout.Grow="1" Text="{Binding NewMdp2}"></Entry>
         </FlexLayout>
-        <Button Text="Confirmer" BackgroundColor="SkyBlue"></Button>
+        <Button Text="Confirmer" BackgroundColor="SkyBlue" Command="{Binding OnChangeMdp}"></Button>
         <Label TextColor="Firebrick" Text="{Binding ErrorMsg}"></Label>
 
     </StackLayout>

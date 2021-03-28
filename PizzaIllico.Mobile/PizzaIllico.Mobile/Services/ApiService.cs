@@ -16,6 +16,7 @@ namespace PizzaIllico.Mobile.Services
     {
         Task<TResponse> Get<TResponse>(string url, string shopid = null, bool requireHeader = false);
         Task<TResponse> Post<TResponse, TData>(string url, TData data, bool requireHeader = false);
+        Task<TResponse> Patch<TResponse, TData>(string url, TData data, bool requireHeader = false);
     }
 
     public class ApiService : IApiService
@@ -39,7 +40,8 @@ namespace PizzaIllico.Mobile.Services
             SecureStorage.Remove("access_token");
             SecureStorage.Remove("refresh_token");
             SecureStorage.Remove("token_type");
-            //TODO GoToHome page
+            DependencyService.Get<ITabbedService>().get().CurrentPage = DependencyService.Get<ITabbedService>().get().Children[0];
+            DependencyService.Get<ITabbedService>().get().Children.RemoveAt(DependencyService.Get<ITabbedService>().get().Children.Count-1);
 #if DEBUG
             DependencyService.Get<INavigationService>().PushAsync<ShopListPage>();
             Console.WriteLine("[DEBUG] Disconnected !");
@@ -231,6 +233,40 @@ namespace PizzaIllico.Mobile.Services
             string responseContent = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<TResponse>(responseContent);
+        }
+
+        public async Task<TResponse> Patch<TResponse, TData>(string url, TData data, bool requireHeader = false)
+        {
+            StringContent content = new StringContent(JsonConvert.SerializeObject(data), System.Text.Encoding.UTF8, "application/json");
+
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Put,
+                RequestUri = new Uri(HOST + url),
+                Content = content
+            };
+
+            if (requireHeader)
+            {
+                await TestConnexion();
+
+                String token = await SecureStorage.GetAsync("access_token");
+                String tokenType = await SecureStorage.GetAsync("token_type");
+                if (token != null && tokenType != null)
+                {
+                    request.Headers.Authorization = new AuthenticationHeaderValue(tokenType, token);
+                }
+                else
+                {
+                    Disconnect();
+                }
+            }
+
+            HttpResponseMessage response = await _client.SendAsync(request);
+
+            string responseContent = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<TResponse>(responseContent);        
         }
     }
 }

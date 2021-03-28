@@ -12,6 +12,7 @@ namespace PizzaIllico.Mobile.Services
     {
         public Task<Response<LoginResponse>> Connect(string login, string motdepasse);
         public Task<Response<LoginResponse>> Register(string login, string prenom, string nom, string phoneNum, string mdp);
+        public Task<Response> ChangePassword(SetPasswordRequest obj);
 
 
     }
@@ -53,6 +54,11 @@ namespace PizzaIllico.Mobile.Services
 
             };
             return await _apiService.Post<Response<LoginResponse>, CreateUserRequest>(Urls.CREATE_USER, data);
+        }
+
+        public async Task<Response> ChangePassword(SetPasswordRequest obj)
+        {
+            return await _apiService.Patch<Response, SetPasswordRequest>(Urls.SET_PASSWORD, obj, true);
         }
     }
 }
