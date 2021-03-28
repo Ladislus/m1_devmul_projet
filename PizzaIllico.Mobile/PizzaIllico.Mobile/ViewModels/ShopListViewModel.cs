@@ -72,7 +72,9 @@ namespace PizzaIllico.Mobile.ViewModels
 	    }
 	    private async void SelectedActionAsync(ShopItem obj)
 	    {
-		    Console.WriteLine("resto Shops: "+obj.Name);
+#if DEBUG
+            Console.WriteLine("resto Shops: "+obj.Name);
+#endif
 		    Dictionary<string, Object> data = new Dictionary<string, Object>();
 		    data.Add("resto",obj);
 		    await DependencyService.Get<INavigationService>().PushAsync<RestoDetailsPage>(data);
@@ -88,10 +90,14 @@ namespace PizzaIllico.Mobile.ViewModels
 
 	        Response<List<ShopItem>> response = await service.ListShops();
 
-			Console.WriteLine($"Appel HTTP : {response.IsSuccess}");
+#if DEBUG
+            Console.WriteLine($"Appel HTTP : {response.IsSuccess}");
+#endif
 	        if (response.IsSuccess)
 	        {
-		        Console.WriteLine($"Appel HTTP : {response.Data.Count}");
+#if DEBUG
+                Console.WriteLine($"Appel HTTP : {response.Data.Count}");
+#endif
 				Shops = new ObservableCollection<ShopItem>(response.Data);
 				Shops = new ObservableCollection<ShopItem>(Shops.OrderBy(a => a.DistanceResto));
 	        }

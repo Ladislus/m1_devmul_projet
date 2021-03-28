@@ -48,16 +48,21 @@ namespace PizzaIllico.Mobile.ViewModels
 
             Response<List<ShopItem>> response = await service.ListShops();
             ObservableCollection<ShopItem> Shops;
-
+#if DEBUG
             Console.WriteLine($"Appel HTTP tom : {response.IsSuccess}");
+#endif
             if (response.IsSuccess)
             {
+#if DEBUG
                 Console.WriteLine($"Appel HTTP tom: {response.Data.Count}");
+#endif
                 Shops = new ObservableCollection<ShopItem>(response.Data);
                 for (int i = 0; i < Shops.Count; i++)
                 {
                     ShopItem shopItem = Shops[i];
+#if DEBUG
                     Console.WriteLine($"addresse Maps " + shopItem.Address);
+#endif
                     Pin pin = new Pin
                     {
                         Label = shopItem.Name,

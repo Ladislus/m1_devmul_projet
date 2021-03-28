@@ -85,7 +85,9 @@ namespace PizzaIllico.Mobile.ViewModels
             }
             else
             {
+#if DEBUG
                 Console.WriteLine("Les deux mots de passe ne correspondent pas.");
+#endif
                 ErrorMsg = "Les deux mots de passe ne correspondent pas.";
             }
 

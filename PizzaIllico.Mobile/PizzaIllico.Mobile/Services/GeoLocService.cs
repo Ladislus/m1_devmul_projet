@@ -21,7 +21,9 @@ namespace PizzaIllico.Mobile.Services
 
                 if (location != null)
                 {
+#if DEBUG
                     Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+#endif
                     return location;
                 }
             }

@@ -23,8 +23,9 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public override async Task OnResume()
         {
+#if DEBUG
             Console.WriteLine("OnResume History");
-
+#endif
             await base.OnResume();
 
             var response = await _apiService.Get<Response<ObservableCollection<OrderItem>>>(Urls.LIST_ORDERS, null, true);

@@ -54,9 +54,9 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public async void DeletePizza(PizzaItem pizza)
         {
-
+#if DEBUG
             Console.WriteLine("DeletePizza " + pizza.Id);
-
+#endif
             var response = await _dialogService.DisplayAlertAsync(
                     "Supprimer",
                     "Êtes vous sûr de vouloir supprimer " + pizza.Name + " de la liste ?",
