@@ -22,7 +22,19 @@ namespace PizzaIllico.Mobile.ViewModels
     {
 	    private ObservableCollection<ShopItem> _shops;
 
-	    public ObservableCollection<ShopItem> Shops
+        private bool _displayConnection;
+
+        public bool DisplayConnection
+        {
+            get
+            {
+                IsConnected();
+                return _displayConnection;
+            }
+            set => SetProperty(ref _displayConnection, value);
+        }
+
+        public ObservableCollection<ShopItem> Shops
 	    {
             get => _shops;
 			set => SetProperty(ref _shops, value);
@@ -39,6 +51,19 @@ namespace PizzaIllico.Mobile.ViewModels
 		    SelectedCommand = new Command<ShopItem>(SelectedActionAsync);
 		    GotoConnexion = new Command(gotoConnexion);
 	    }
+
+        private async void IsConnected()
+        {
+            var token = await SecureStorage.GetAsync("access_token");
+            if (!string.IsNullOrEmpty(token) && token != "null")
+            {
+                DisplayConnection = false;
+            }
+            else
+            {
+                DisplayConnection = true;
+            }
+        }
 
 	    public async void gotoConnexion()
 	    {
@@ -57,7 +82,9 @@ namespace PizzaIllico.Mobile.ViewModels
         {
 	        await base.OnResume();
 
-	        IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
+            DisplayConnection = true;
+
+            IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
 
 	        Response<List<ShopItem>> response = await service.ListShops();
 

@@ -31,14 +31,14 @@ namespace PizzaIllico.Mobile.ViewModels
             OnDeco = new Command(onDeco);
         }
 
-        public void onDeco()
+        private void onDeco()
         {
             ErrorMsg = "onDeco";
             try
             {
                 SecureStorage.Remove("access_token");
                 SecureStorage.Remove("refresh_token");
-
+                SecureStorage.Remove("token_type");
             }
             catch (Exception ex)
             {
