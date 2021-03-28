@@ -4,12 +4,12 @@ using Xamarin.Forms.Xaml;
 namespace PizzaIllico.Mobile.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MapsResto
+    public partial class CartPage
     {
-        public MapsResto()
+        public CartPage()
         {
             InitializeComponent();
-            BindingContext = new MapsViewModel();
+            BindingContext = new CartViewModel();
         }
     }
 }

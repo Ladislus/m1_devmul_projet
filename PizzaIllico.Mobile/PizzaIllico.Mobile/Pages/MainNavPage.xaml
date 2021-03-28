@@ -7,7 +7,8 @@
             
             NavigationPage.HasNavigationBar="False">
   <!--Pages can be added as references or inline-->
-  <pages:ShopListPage/>
-  <pages:MapsResto/>
-  <pages:ProfileTabbedPage x:Name="profilePage"/>
+    <pages:ShopListPage/>
+    <pages:MapsResto/>
+    <pages:CartPage/>
+    <pages:ProfileTabbedPage x:Name="profilePage"/>
 </TabbedPage>

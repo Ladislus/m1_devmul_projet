@@ -32,7 +32,7 @@ namespace PizzaIllico.Mobile.ViewModels
             OnDeco = new Command(onDeco);
         }
 
-        public void onDeco()
+        private void onDeco()
         {
             ErrorMsg = "onDeco";
             try
@@ -40,6 +40,7 @@ namespace PizzaIllico.Mobile.ViewModels
                 SecureStorage.Remove("access_token");
                 SecureStorage.Remove("refresh_token");
                 this.tabbedPage.CurrentPage = this.tabbedPage.Children[0];
+                SecureStorage.Remove("token_type");
             }
             catch (Exception ex)
             {

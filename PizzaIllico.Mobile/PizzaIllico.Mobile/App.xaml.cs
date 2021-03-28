@@ -23,9 +23,9 @@ namespace PizzaIllico.Mobile
         private static void RegisterServices()
         {
             DependencyService.RegisterSingleton<IApiService>(new ApiService());
-            
             DependencyService.RegisterSingleton<IPizzaApiService>(new PizzaApiService());
             DependencyService.RegisterSingleton<IUserService>(new UserService());
+            DependencyService.RegisterSingleton<ICartService>(new CartService());
         }
     }
 }
