@@ -86,7 +86,9 @@ namespace PizzaIllico.Mobile.Services
                     );
                 if (response.IsSuccess)
                 {
+#if DEBUG
                     Console.WriteLine("Request " + pair.Key + " successfull");
+#endif
                     toRemove.Add(pair.Key);
                 }
                 else
@@ -96,7 +98,7 @@ namespace PizzaIllico.Mobile.Services
                         DependencyService.Get<IToast>().LongAlert(response.ErrorMessage);
                         toRemove.Add(pair.Key);
                     }
-                    // TODO
+                    DependencyService.Get<IToast>().LongAlert("Erreur inconnue");
                 }
             }
 

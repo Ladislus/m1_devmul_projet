@@ -13,7 +13,6 @@ namespace PizzaIllico.Mobile.ViewModels
     {
 
         private string _errorMsg;
-        private ICommand _onDeco;
 
         public ICommand OnDeco
         {
@@ -34,33 +33,20 @@ namespace PizzaIllico.Mobile.ViewModels
         private void onDeco()
         {
             ErrorMsg = "onDeco";
-            try
-            {
-                SecureStorage.Remove("access_token");
-                SecureStorage.Remove("refresh_token");
-                SecureStorage.Remove("token_type");
-            }
-            catch (Exception ex)
-            {
-                // Possible that device doesn't support secure storage on device.
-            }
+
+            SecureStorage.Remove("access_token");
+            SecureStorage.Remove("refresh_token");
+            SecureStorage.Remove("token_type");
         }
-        public async override Task OnResume()
+        public override async Task OnResume()
         {
             await base.OnResume();
-            try
+            string accessToken = await SecureStorage.GetAsync("access_token");
+            string refreshToken = await SecureStorage.GetAsync("refresh_token");
+            ErrorMsg = accessToken;
+            if (accessToken == "" && refreshToken == "")
             {
-                string access_token = await SecureStorage.GetAsync("access_token");
-                string refresh_token = await SecureStorage.GetAsync("refresh_token");
-                ErrorMsg = access_token;
-                if (access_token == "" && refresh_token == "")
-                {
-                    await DependencyService.Get<INavigationService>().PushAsync<ConnexionPage>();
-                }
-            }
-            catch (Exception ex)
-            {
-                // Possible that device doesn't support secure storage on device.
+                await DependencyService.Get<INavigationService>().PushAsync<ConnexionPage>();
             }
         }
     }

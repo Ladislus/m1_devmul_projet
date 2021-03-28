@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using PizzaIllico.Mobile.Controls;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.Services
 {
@@ -23,21 +25,21 @@ namespace PizzaIllico.Mobile.Services
                     return location;
                 }
             }
-            catch (FeatureNotSupportedException fnsEx)
+            catch (FeatureNotSupportedException)
             {
-                // Handle not supported on device exception
+                DependencyService.Get<IToast>().LongAlert("La feature n'est pas supportée");
             }
-            catch (FeatureNotEnabledException fneEx)
+            catch (FeatureNotEnabledException)
             {
-                // Handle not enabled on device exception
+                DependencyService.Get<IToast>().LongAlert("La feature n'est pas activée");
             }
-            catch (PermissionException pEx)
+            catch (PermissionException)
             {
-                // Handle permission exception
+                DependencyService.Get<IToast>().LongAlert("Permissions insuffisantes");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Unable to get location
+                DependencyService.Get<IToast>().LongAlert("Erreur inconnue");
             }
             return new Location(0.0, 0.0);
         }

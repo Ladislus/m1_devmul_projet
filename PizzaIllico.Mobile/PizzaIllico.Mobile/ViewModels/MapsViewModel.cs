@@ -34,7 +34,7 @@ namespace PizzaIllico.Mobile.ViewModels
         {
             await base.OnResume();
 
-            GeoLocService geoloc = new GeoLocService();
+            IGeoLocService geoloc = new GeoLocService();
             Location lastPos = geoloc.GetLastPosAsync().Result;
             Position position = new Position(lastPos.Latitude, lastPos.Longitude);
             MapSpan mapSpan = new MapSpan(position, 0.01, 0.01);

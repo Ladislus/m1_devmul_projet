@@ -55,20 +55,11 @@ namespace PizzaIllico.Mobile.ViewModels
 
             if (response.IsSuccess)
             {
-                try
-                {
-                    await SecureStorage.SetAsync("token_type", response.Data.TokenType);
-                    await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
-                    await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
-                    await SecureStorage.SetAsync("expire_in", DateTime.Now.AddSeconds(response.Data.ExpiresIn).Ticks.ToString());
-                    gotoHomeList();
-
-                }
-                catch (Exception ex)
-                {
-                    // TODO
-                    // Possible that device doesn't support secure storage on device.
-                }
+                await SecureStorage.SetAsync("token_type", response.Data.TokenType);
+                await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
+                await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
+                await SecureStorage.SetAsync("expire_in", DateTime.Now.AddSeconds(response.Data.ExpiresIn).Ticks.ToString());
+                gotoHomeList();
             }
             else
             {
