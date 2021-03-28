@@ -18,6 +18,7 @@ namespace PizzaIllico.Mobile.ViewModels
         private readonly ICartService _cartService = DependencyService.Get<ICartService>();
         private readonly IDialogService _dialogService = DependencyService.Get<IDialogService>();
 
+        // Contenu du panier
         private ObservableCollection<PizzaItem> _cart;
         public ObservableCollection<PizzaItem> Cart
         {
@@ -32,6 +33,7 @@ namespace PizzaIllico.Mobile.ViewModels
             set => SetProperty(ref _price, value);
         }
 
+        // Boolean permettant de savoir si le bouton de commande doit être afficher (panier vide ou non)
         private bool _shouldBeVisible;
         public bool ShouldBeVisible
         {
@@ -54,11 +56,13 @@ namespace PizzaIllico.Mobile.ViewModels
             SetCart();
         }
 
+        // Fonction de suppression d'une pizza dans le panier
         public async void DeletePizza(PizzaItem pizza)
         {
 #if DEBUG
             Console.WriteLine("DeletePizza " + pizza.Id);
 #endif
+            // Demande de confirmation
             var response = await _dialogService.DisplayAlertAsync(
                     "Supprimer",
                     "Êtes vous sûr de vouloir supprimer " + pizza.Name + " de la liste ?",
@@ -72,10 +76,13 @@ namespace PizzaIllico.Mobile.ViewModels
             }
         }
 
+        // Fonction pour commander le contenu du panier
         public async void OrderCart()
         {
+            // Si l'utilisateur est connecté
             if (!string.IsNullOrEmpty(await SecureStorage.GetAsync("access_token")))
             {
+                // Demande de confirmation
                 var response = await _dialogService.DisplayAlertAsync(
                     "Commander",
                     "Êtes vous sûr de vouloir commander pour un total de " + Price + "€ ?",
@@ -84,7 +91,9 @@ namespace PizzaIllico.Mobile.ViewModels
                 );
                 if (response)
                 {
+                    // Lancement de la commande
                     await _cartService.Order();
+                    // Mise à jour de la vue
                     SetCart();
                 }
             }
@@ -95,14 +104,17 @@ namespace PizzaIllico.Mobile.ViewModels
 
         }
 
+        // Fonction de mise à jour de la vue
         private void SetCart()
         {
+            // Fetch de toutes les pizzas dans le panier (CartService)
             ObservableCollection<PizzaItem> items = new();
             foreach (var pizza in _cartService.Orders.Values.SelectMany(pizzas => pizzas))
             {
                 items.Add(pizza);
             }
 
+            // Mise à jour des property (passage par les SetProperty())
             Cart = items;
             Price = _cartService.Price;
             ShouldBeVisible = Cart.Count > 0;

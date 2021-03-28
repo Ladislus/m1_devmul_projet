@@ -29,14 +29,12 @@ namespace PizzaIllico.Mobile.ViewModels
             get => _mapPos;
             set => SetProperty(ref _mapPos, value);
         }
-        
-        public ICommand SelectedCommand { get; set; }
 
         public override async Task OnResume()
         {
             await base.OnResume();
             // Récupération de la dernière geoloc
-            IGeoLocService geoloc = new GeoLocService();
+            IGeoLocService geoloc = DependencyService.Get<IGeoLocService>();
             Location lastPos = geoloc.GetLastPosAsync().Result;
             // Récupération de la pos du resto 
             Position position = new Position(lastPos.Latitude, lastPos.Longitude);

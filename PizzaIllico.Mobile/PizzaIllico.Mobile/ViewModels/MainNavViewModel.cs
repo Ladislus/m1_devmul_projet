@@ -27,6 +27,7 @@ namespace PizzaIllico.Mobile.ViewModels
             string refreshToken = await SecureStorage.GetAsync("refresh_token");
             if (accessToken == null && refreshToken == null)
             {
+                //Si le user courant n'est pas connecter : il ne peux pas acceder au profile
                 IsConnected = "False";
                 _mainVue.Children.Remove(_profileTab);
             }

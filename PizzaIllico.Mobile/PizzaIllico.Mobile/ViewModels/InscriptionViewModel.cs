@@ -68,6 +68,7 @@ namespace PizzaIllico.Mobile.ViewModels
         {
             if (Motdepasse == Motdepasse2)
             {
+                //Si les deux mdp sont identiques --> On inscrit
                 IUserService service = DependencyService.Get<IUserService>();
                 Response<LoginResponse> response = await service.Register(Login, Prenom, Nom, PhoneNum, Motdepasse);
                 if (response.IsSuccess)

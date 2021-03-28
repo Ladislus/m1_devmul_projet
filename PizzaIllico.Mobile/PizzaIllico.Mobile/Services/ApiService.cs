@@ -23,23 +23,29 @@ namespace PizzaIllico.Mobile.Services
         private const string HOST = "https://pizza.julienmialon.ovh/";
         private readonly HttpClient _client = new();
 
+        // Fonction pour vérifier qu'un utilisateur est connecté
         private async Task<bool> IsConnected()
         {
 #if DEBUG
             Console.WriteLine("[DEBUG] CALL -> IsConnected ?");
 #endif
+            // Vérifie la présence de "access_token" dans le safestorage
             return !string.IsNullOrEmpty(await SecureStorage.GetAsync("access_token"));
         }
 
+        // Fonction pour déconnecter l'utilisateur
         private void Disconnect()
         {
 #if DEBUG
             Console.WriteLine("[DEBUG] CALL ->  Disconnect !");
 #endif
+            // Clear le safestorage
             SecureStorage.Remove("access_token");
             SecureStorage.Remove("refresh_token");
             SecureStorage.Remove("token_type");
+            // Toast d'alerte
             DependencyService.Get<IToast>().LongAlert("Un erreur de connexion est survenue, vous avez été déconnecté, veuillez vous reconnecter");
+            // Redirection vers la page d'accueil
             DependencyService.Get<ITabbedService>().get().CurrentPage = DependencyService.Get<ITabbedService>().get().Children[0];
             DependencyService.Get<ITabbedService>().get().Children.RemoveAt(DependencyService.Get<ITabbedService>().get().Children.Count-1);
 #if DEBUG
@@ -47,31 +53,37 @@ namespace PizzaIllico.Mobile.Services
 #endif
         }
 
+        // Fonction pour vérifier que le token est toujours valide
         private async Task<bool> NeedRefresh()
         {
 #if DEBUG
             Console.WriteLine("[DEBUG] CALL -> NeedRefresh ?");
 #endif
+            // Récupération de la date d'expiration, et comparaison avec la date actuelle(+5 secondes pour anticiper le temps d'envoie de la request)
             var ticks = long.Parse(await SecureStorage.GetAsync("expire_in"));
             var dateTime = new DateTime(ticks);
-            return DateTime.Now.CompareTo(dateTime) > 0;
+            return DateTime.Now.AddSeconds(5).CompareTo(dateTime) > 0;
         }
 
+        // Fonction pour tester si un utilisateurs est connecté, et que le token est valide
         private async Task TestConnexion()
         {
 #if DEBUG
             Console.WriteLine("[DEBUG] CALL ->  TestConnexion");
 #endif
+            // Si un utilisateur est connecté ...
             if (await IsConnected())
             {
 #if DEBUG
                 Console.WriteLine("\t[DEBUG] connected !");
 #endif
+                // Test la validité du token
                 if (await NeedRefresh())
                 {
 #if DEBUG
                     Console.WriteLine("[DEBUG] Need refresh !");
 #endif
+                    // Si le token n'est plus valide, tente de la refresh
                     await Refresh();
                 }
             }
@@ -80,15 +92,18 @@ namespace PizzaIllico.Mobile.Services
 #if DEBUG
                 Console.WriteLine("\t[DEBUG] Not connected !");
 #endif
+                // Si personne n'est connecté, renvoi à la page d'accueil
                 Disconnect();
             }
         }
 
+        // Fonction pour tenter de refresh le mot de passe
         private async Task Refresh()
         {
 #if DEBUG
             Console.WriteLine("[DEBUG] CALL -> Refresh !");
 #endif
+            // Request à l'API
             String refreshToken = await SecureStorage.GetAsync("refresh_token");
             Response<LoginResponse> loginResponse = await RefreshRequestCall(
                 new RefreshRequest
@@ -103,6 +118,7 @@ namespace PizzaIllico.Mobile.Services
             Console.WriteLine("[DEBUG] ErrorCode: " + loginResponse.ErrorCode);
             Console.WriteLine("[DEBUG] ErrorMessage: " + loginResponse.ErrorMessage);
 #endif
+            // Si la requête à réussie, mets à jours les informations
             if (loginResponse.IsSuccess)
             {
                 await SecureStorage.SetAsync("token_type", loginResponse.Data.TokenType);
@@ -117,6 +133,7 @@ namespace PizzaIllico.Mobile.Services
                 Console.WriteLine("[DEBUG] Expire: " + loginResponse.Data.ExpiresIn);
 #endif
             }
+            // Si la request échoue, déconnexion/retour à l'accueil
             else
             {
 #if DEBUG
@@ -127,6 +144,7 @@ namespace PizzaIllico.Mobile.Services
             }
         }
 
+        // Fonction de request à l'API pour refresh le token
         private async Task<Response<LoginResponse>> RefreshRequestCall(RefreshRequest request)
         {
 #if DEBUG
@@ -160,6 +178,7 @@ namespace PizzaIllico.Mobile.Services
             return JsonConvert.DeserializeObject<Response<LoginResponse>>(responseContent);
         }
 
+        // Fonction générique GET
         public async Task<TResponse> Get<TResponse>(string url, string param = null, bool requireHeader = false)
         {
 
@@ -200,6 +219,7 @@ namespace PizzaIllico.Mobile.Services
             return JsonConvert.DeserializeObject<TResponse>(content);
         }
 
+        // Fonction générique POST
         public async Task<TResponse> Post<TResponse, TData>(string url, TData data, bool requireHeader = false)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(data), System.Text.Encoding.UTF8, "application/json");
@@ -234,6 +254,7 @@ namespace PizzaIllico.Mobile.Services
             return JsonConvert.DeserializeObject<TResponse>(responseContent);
         }
 
+        // Fonction générique PATCH
         public async Task<TResponse> Patch<TResponse, TData>(string url, TData data, bool requireHeader = false)
         {
             StringContent content = new StringContent(JsonConvert.SerializeObject(data), System.Text.Encoding.UTF8, "application/json");

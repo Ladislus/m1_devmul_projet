@@ -12,6 +12,7 @@ namespace PizzaIllico.Mobile.ViewModels
 {
     class ConnexionViewModel : ViewModelBase
     {
+        
         private String _login;
         private String _motdepasse, _errorMsg;
 
@@ -54,7 +55,8 @@ namespace PizzaIllico.Mobile.ViewModels
             Response<LoginResponse> response = await service.Connect(Login, Motdepasse);
 
             if (response.IsSuccess)
-            {
+            { 
+                //On ajoute les tokens de l'utilisateur dans le secureStorage
                 await SecureStorage.SetAsync("token_type", response.Data.TokenType);
                 await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
                 await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
@@ -68,12 +70,15 @@ namespace PizzaIllico.Mobile.ViewModels
         }
         public async void gotoInscriptionAsync()
         {
+            //Redirection vers l'inscription
             await DependencyService.Get<INavigationService>().PushAsync<InscriptionPage>();
 
         }
         public async void gotoHomeList()
         {
             //await ReplaceAsync(new ShopListPage());
+            
+            //"lancement" de la vue principale
             await DependencyService.Get<INavigationService>().PushAsync<MainNavPage>();
 
         }
