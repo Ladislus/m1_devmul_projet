@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PizzaIllico.Mobile.Controls;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
 using Storm.Mvvm.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.ViewModels
@@ -49,7 +51,7 @@ namespace PizzaIllico.Mobile.ViewModels
         public override async Task OnResume()
         {
             await base.OnResume();
-            SetCart();
+            await SetCart();
         }
 
         public async void DeletePizza(PizzaItem pizza)
@@ -66,26 +68,34 @@ namespace PizzaIllico.Mobile.ViewModels
             if (response)
             {
                 _cartService.RemovePizza(pizza);
-                SetCart();
+                await SetCart();
             }
         }
 
         public async void OrderCart()
         {
-            var response = await _dialogService.DisplayAlertAsync(
+            if (!string.IsNullOrEmpty(await SecureStorage.GetAsync("access_token")))
+            {
+                var response = await _dialogService.DisplayAlertAsync(
                     "Commander",
                     "Êtes vous sûr de vouloir commander pour un total de " + Price + "€ ?",
                     "Oui",
                     "Non"
                 );
-            if (response)
-            {
-                await _cartService.Order();
-                SetCart();
+                if (response)
+                {
+                    await _cartService.Order();
+                    await SetCart();
+                }
             }
+            else
+            {
+                DependencyService.Get<IToast>().LongAlert("Veuillez vous connecter pour commander");
+            }
+
         }
 
-        private void SetCart()
+        private async Task SetCart()
         {
             ObservableCollection<PizzaItem> items = new();
             foreach (var pizza in _cartService.Orders.Values.SelectMany(pizzas => pizzas))
