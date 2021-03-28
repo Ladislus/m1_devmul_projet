@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using PizzaIllico.Mobile.Pages;
 using Storm.Mvvm;
 using Xamarin.Essentials;

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
-using PizzaIllico.Mobile.Pages;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
-using Storm.Mvvm.Navigation;
 using Storm.Mvvm.Services;
 using Xamarin.Forms;
 
