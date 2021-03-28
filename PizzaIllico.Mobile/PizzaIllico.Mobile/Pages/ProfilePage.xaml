@@ -6,6 +6,7 @@
                         x:Class="PizzaIllico.Mobile.Pages.ProfilePage"
                         Title="Paramètre"
                         IconImageSource="setting"
+                        x:Name="profileP"
 >
     <StackLayout Padding="10,10,10,0" HorizontalOptions="FillAndExpand">
         <Button BackgroundColor="SkyBlue" Text="Deconnexion" Command="{Binding OnDeco}"></Button>

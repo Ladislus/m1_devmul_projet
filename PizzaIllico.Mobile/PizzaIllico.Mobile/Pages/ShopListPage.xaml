@@ -49,8 +49,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
-            </ListView>
+        </ListView> 
         <Frame BackgroundColor="SkyBlue"
                CornerRadius="150"
                AbsoluteLayout.LayoutFlags="PositionProportional"  

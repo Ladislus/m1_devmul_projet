@@ -17,6 +17,10 @@ namespace PizzaIllico.Mobile.Pages
         {
             InitializeComponent();
             BindingContext = new ProfilePageViewModel();
+            if (BindingContext is ProfilePageViewModel bc)
+            {
+                bc.tabbedPage = (TabbedPage) profileP.Parent;
+            }
         }
     }
 }

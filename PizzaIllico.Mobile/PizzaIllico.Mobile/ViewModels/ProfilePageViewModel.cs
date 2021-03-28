@@ -14,6 +14,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
         private string _errorMsg;
         private ICommand _onDeco;
+        public TabbedPage tabbedPage;
 
         public ICommand OnDeco
         {
@@ -38,7 +39,7 @@ namespace PizzaIllico.Mobile.ViewModels
             {
                 SecureStorage.Remove("access_token");
                 SecureStorage.Remove("refresh_token");
-
+                this.tabbedPage.CurrentPage = this.tabbedPage.Children[0];
             }
             catch (Exception ex)
             {
