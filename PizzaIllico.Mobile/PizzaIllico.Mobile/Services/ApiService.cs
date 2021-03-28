@@ -240,7 +240,7 @@ namespace PizzaIllico.Mobile.Services
 
             HttpRequestMessage request = new HttpRequestMessage
             {
-                Method = HttpMethod.Put,
+                Method = new HttpMethod("PATCH"),
                 RequestUri = new Uri(HOST + url),
                 Content = content
             };

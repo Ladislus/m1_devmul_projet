@@ -79,17 +79,12 @@ namespace PizzaIllico.Mobile.ViewModels
         private void onDeco()
         {
             ErrorMsg = "onDeco";
-
-
             SecureStorage.Remove("access_token");
             SecureStorage.Remove("refresh_token");
             SecureStorage.Remove("token_type");
             TabbedPage main = DependencyService.Get<ITabbedService>().get(); 
             main.CurrentPage = main.Children[0];
             main.Children.RemoveAt(main.Children.Count-1);
-        
-
-
         }
         public override async Task OnResume()
         {
