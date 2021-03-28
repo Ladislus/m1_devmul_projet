@@ -51,7 +51,7 @@ namespace PizzaIllico.Mobile.ViewModels
         public override async Task OnResume()
         {
             await base.OnResume();
-            await SetCart();
+            SetCart();
         }
 
         public async void DeletePizza(PizzaItem pizza)
@@ -68,7 +68,7 @@ namespace PizzaIllico.Mobile.ViewModels
             if (response)
             {
                 _cartService.RemovePizza(pizza);
-                await SetCart();
+                SetCart();
             }
         }
 
@@ -85,7 +85,7 @@ namespace PizzaIllico.Mobile.ViewModels
                 if (response)
                 {
                     await _cartService.Order();
-                    await SetCart();
+                    SetCart();
                 }
             }
             else
@@ -95,7 +95,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
         }
 
-        private async Task SetCart()
+        private void SetCart()
         {
             ObservableCollection<PizzaItem> items = new();
             foreach (var pizza in _cartService.Orders.Values.SelectMany(pizzas => pizzas))
