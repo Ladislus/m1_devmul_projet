@@ -49,8 +49,7 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
-            </ListView>
+        </ListView> 
         <Frame BackgroundColor="SkyBlue"
                IsVisible="{Binding DisplayConnection}"
                CornerRadius="150"
