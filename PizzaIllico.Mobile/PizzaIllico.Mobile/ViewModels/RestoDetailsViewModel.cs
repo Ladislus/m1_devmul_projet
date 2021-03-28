@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Pizzas;
-using PizzaIllico.Mobile.Pages;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
-using Storm.Mvvm.Navigation;
 using Storm.Mvvm.Services;
 using Xamarin.Forms;
 
@@ -84,18 +81,23 @@ namespace PizzaIllico.Mobile.ViewModels
         public override async Task OnResume()
         {
             await base.OnResume();
+#if DEBUG
             Console.WriteLine("DEBUT requete des pizz");
+#endif
 
             IPizzaApiService service = DependencyService.Get<IPizzaApiService>();
 
             Response<List<PizzaItem>> response = await service.ListPizzas((int)this._id);
-
+#if DEBUG
             Console.WriteLine($"Appel HTTP : {response.IsSuccess}");
+#endif
             if (response.IsSuccess)
-            {            
+            {
+#if DEBUG
                 Console.WriteLine("Success de la requete des pizz");
-                Pizzas = new ObservableCollection<PizzaItem>(response.Data);
                 Console.WriteLine($"Appel HTTP (pizza): {response.Data.Count}");
+#endif
+                Pizzas = new ObservableCollection<PizzaItem>(response.Data);
             }
             
             foreach (PizzaItem pizzaItem in Pizzas)

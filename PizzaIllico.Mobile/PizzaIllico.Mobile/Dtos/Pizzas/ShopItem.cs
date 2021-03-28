@@ -28,15 +28,17 @@ namespace PizzaIllico.Mobile.Dtos.Pizzas
         [JsonProperty("minutes_per_kilometer")]
         public double MinutesPerKilometer { get; set; }
 
-        private double _distance;
+        // Mise en place d'un attribut pour stocké la distance calculé entre le telephone et le resto
+        private double _distance; 
+        // Propriété pour la distance
         public double DistanceResto
         {
             get
             {
-                GeoLocService geoloc = new GeoLocService();
-                Location pos = geoloc.GetLastPosAsync().Result;
-                Location resto = new Location(Latitude, Longitude);
-                _distance = pos.CalculateDistance(resto, DistanceUnits.Kilometers);
+                GeoLocService geoloc = new GeoLocService();  
+                Location pos = geoloc.GetLastPosAsync().Result; // Récupération de la dernière position du téléphone
+                Location resto = new Location(Latitude, Longitude); // Récupération de position du resto
+                _distance = pos.CalculateDistance(resto, DistanceUnits.Kilometers); // Calcul de la distance entre le resto et le telephone 
                 return _distance;
             }
             set

@@ -20,7 +20,8 @@ namespace PizzaIllico.Mobile.Services
     public class CartService : ICartService
     {
         private Dictionary<long, List<PizzaItem>> _orders = new();
-        private readonly IApiService _apiService;
+        private readonly IApiService _apiService = DependencyService.Get<IApiService>();
+        private readonly IToast _toast = DependencyService.Get<IToast>();
 
         public Dictionary<long, List<PizzaItem>> Orders => _orders;
 
@@ -39,11 +40,6 @@ namespace PizzaIllico.Mobile.Services
 
                 return price;
             }
-        }
-
-        public CartService()
-        {
-            _apiService = DependencyService.Get<IApiService>();
         }
 
         public void AddPizza(long shopId, PizzaItem pizza)
@@ -86,17 +82,19 @@ namespace PizzaIllico.Mobile.Services
                     );
                 if (response.IsSuccess)
                 {
+#if DEBUG
                     Console.WriteLine("Request " + pair.Key + " successfull");
+#endif
                     toRemove.Add(pair.Key);
                 }
                 else
                 {
                     if (response.ErrorCode == "PIZZA_OUT_OF_STOCK")
                     {
-                        DependencyService.Get<IToast>().LongAlert(response.ErrorMessage);
+                        _toast.LongAlert(response.ErrorMessage);
                         toRemove.Add(pair.Key);
                     }
-                    // TODO
+                    _toast.LongAlert("Erreur inconnue");
                 }
             }
 

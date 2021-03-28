@@ -8,7 +8,9 @@ namespace PizzaIllico.Mobile.Pages
     {
         public MapsResto()
         {
-            InitializeComponent();
+            // Initialisation de la page qui contient la map avec les restos en pin
+            InitializeComponent(); 
+            // Liaison avec le Context qui est le MapsViewModel
             BindingContext = new MapsViewModel();
         }
     }

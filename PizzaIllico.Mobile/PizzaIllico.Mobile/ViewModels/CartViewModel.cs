@@ -3,10 +3,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PizzaIllico.Mobile.Controls;
 using PizzaIllico.Mobile.Dtos.Pizzas;
 using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
 using Storm.Mvvm.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.ViewModels
@@ -54,9 +56,9 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public async void DeletePizza(PizzaItem pizza)
         {
-
+#if DEBUG
             Console.WriteLine("DeletePizza " + pizza.Id);
-
+#endif
             var response = await _dialogService.DisplayAlertAsync(
                     "Supprimer",
                     "Êtes vous sûr de vouloir supprimer " + pizza.Name + " de la liste ?",
@@ -72,17 +74,25 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public async void OrderCart()
         {
-            var response = await _dialogService.DisplayAlertAsync(
+            if (!string.IsNullOrEmpty(await SecureStorage.GetAsync("access_token")))
+            {
+                var response = await _dialogService.DisplayAlertAsync(
                     "Commander",
                     "Êtes vous sûr de vouloir commander pour un total de " + Price + "€ ?",
                     "Oui",
                     "Non"
                 );
-            if (response)
-            {
-                await _cartService.Order();
-                SetCart();
+                if (response)
+                {
+                    await _cartService.Order();
+                    SetCart();
+                }
             }
+            else
+            {
+                DependencyService.Get<IToast>().LongAlert("Veuillez vous connecter pour commander");
+            }
+
         }
 
         private void SetCart()
