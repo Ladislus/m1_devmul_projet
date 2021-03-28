@@ -30,13 +30,17 @@ namespace PizzaIllico.Mobile.ViewModels
             var response = await _apiService.Get<Response<ObservableCollection<OrderItem>>>(Urls.LIST_ORDERS, null, true);
             if (response.IsSuccess)
             {
-                Console.WriteLine("REQUEST SUCCESSFUL !");
+#if DEBUG
+                Console.WriteLine("[DEBUG] HISTORY FETCH SUCCESS !");
+#endif
                 History = new ObservableCollection<OrderItem>(response.Data.OrderByDescending(order => order.Date));
             }
+#if DEBUG
             else
             {
-                Console.WriteLine("ERROR !");
+                Console.WriteLine("[DEBUG] HISTORY FETCH FAILED !");
             }
+#endif
         }
     }
 }

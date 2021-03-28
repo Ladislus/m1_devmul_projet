@@ -5,11 +5,6 @@ using PizzaIllico.Mobile.Services;
 using Storm.Mvvm;
 using Storm.Mvvm.Services;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
@@ -66,8 +61,6 @@ namespace PizzaIllico.Mobile.ViewModels
                     await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
                     await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
                     await SecureStorage.SetAsync("expire_in", DateTime.Now.AddSeconds(response.Data.ExpiresIn).Ticks.ToString());
-                    await SecureStorage.SetAsync("login", Login);
-                    await SecureStorage.SetAsync("password", Motdepasse);
                     gotoHomeList();
 
                 }
