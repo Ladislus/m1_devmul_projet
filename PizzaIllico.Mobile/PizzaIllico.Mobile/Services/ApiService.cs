@@ -3,9 +3,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PizzaIllico.Mobile.Controls;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Authentications;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace PizzaIllico.Mobile.Services
 {
@@ -36,6 +38,7 @@ namespace PizzaIllico.Mobile.Services
             SecureStorage.Remove("access_token");
             SecureStorage.Remove("refresh_token");
             SecureStorage.Remove("token_type");
+            DependencyService.Get<IToast>().LongAlert("Un erreur de connexion est survenue, vous avez été déconnecté, veuillez vous reconnecter");
             //TODO GoToHome page
 #if DEBUG
             Console.WriteLine("[DEBUG] Disconnected !");
