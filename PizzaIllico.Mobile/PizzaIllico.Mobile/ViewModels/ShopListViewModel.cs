@@ -99,6 +99,7 @@ namespace PizzaIllico.Mobile.ViewModels
                 Console.WriteLine($"Appel HTTP : {response.Data.Count}");
 #endif
 				Shops = new ObservableCollection<ShopItem>(response.Data);
+				// Trie de la liste des restos en fonction de la distance en le telephone et les restos
 				Shops = new ObservableCollection<ShopItem>(Shops.OrderBy(a => a.DistanceResto));
 	        }
         }
