@@ -58,7 +58,6 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public async void onChangeMdp()
         {
-            ErrorMsg = "je change !";
             IUserService service = DependencyService.Get<IUserService>();
             SetPasswordRequest obj = new SetPasswordRequest();
             obj.OldPassword = OldMdp;
@@ -78,7 +77,6 @@ namespace PizzaIllico.Mobile.ViewModels
 
         private void onDeco()
         {
-            ErrorMsg = "onDeco";
             SecureStorage.Remove("access_token");
             SecureStorage.Remove("refresh_token");
             SecureStorage.Remove("token_type");
@@ -91,7 +89,6 @@ namespace PizzaIllico.Mobile.ViewModels
             await base.OnResume();
             string accessToken = await SecureStorage.GetAsync("access_token");
             string refreshToken = await SecureStorage.GetAsync("refresh_token");
-            ErrorMsg = accessToken;
             if (accessToken == "" && refreshToken == "")
             {
                 await DependencyService.Get<INavigationService>().PushAsync<ConnexionPage>();
