@@ -17,7 +17,7 @@ namespace PizzaIllico.Mobile.ViewModels
 
         public InscriptionViewModel()
         {
-            CommandInscription = new Command(inscription);
+            CommandInscription = new Command(Inscription);
             GotoConnexion = new Command(gotoConnexionAsync);
         }
         public String Login
@@ -64,7 +64,7 @@ namespace PizzaIllico.Mobile.ViewModels
             get;
         }
 
-        public async void inscription()
+        public async void Inscription()
         {
             if (Motdepasse == Motdepasse2)
             {
@@ -72,17 +72,9 @@ namespace PizzaIllico.Mobile.ViewModels
                 Response<LoginResponse> response = await service.Register(Login, Prenom, Nom, PhoneNum, Motdepasse);
                 if (response.IsSuccess)
                 {
-                    try
-                    {
-                        await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
-                        await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
-                        gotoHomeList();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        // Possible that device doesn't support secure storage on device.
-                    }
+                    await SecureStorage.SetAsync("access_token", response.Data.AccessToken);
+                    await SecureStorage.SetAsync("refresh_token", response.Data.RefreshToken);
+                    gotoHomeList();
                 }
                 else
                 {
@@ -93,7 +85,9 @@ namespace PizzaIllico.Mobile.ViewModels
             }
             else
             {
+#if DEBUG
                 Console.WriteLine("Les deux mots de passe ne correspondent pas.");
+#endif
                 ErrorMsg = "Les deux mots de passe ne correspondent pas.";
             }
 

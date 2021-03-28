@@ -35,7 +35,6 @@ namespace PizzaIllico.Mobile.Services
                 Password = motdepasse,
                 ClientId = "MOBILE",
                 ClientSecret = "UNIV"
-
             };
             return await _apiService.Post<Response<LoginResponse>, LoginWithCredentialsRequest>(Urls.LOGIN_WITH_CREDENTIALS, data);
         }
@@ -51,7 +50,6 @@ namespace PizzaIllico.Mobile.Services
                 PhoneNumber = phoneNum,
                 FirstName = prenom,
                 LastName = nom
-
             };
             return await _apiService.Post<Response<LoginResponse>, CreateUserRequest>(Urls.CREATE_USER, data);
         }

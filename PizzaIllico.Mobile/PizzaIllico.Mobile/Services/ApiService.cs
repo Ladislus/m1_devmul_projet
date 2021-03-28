@@ -3,10 +3,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using PizzaIllico.Mobile.Controls;
 using PizzaIllico.Mobile.Dtos;
 using PizzaIllico.Mobile.Dtos.Authentications;
-using PizzaIllico.Mobile.Pages;
-using Storm.Mvvm.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -40,10 +39,10 @@ namespace PizzaIllico.Mobile.Services
             SecureStorage.Remove("access_token");
             SecureStorage.Remove("refresh_token");
             SecureStorage.Remove("token_type");
+            DependencyService.Get<IToast>().LongAlert("Un erreur de connexion est survenue, vous avez été déconnecté, veuillez vous reconnecter");
             DependencyService.Get<ITabbedService>().get().CurrentPage = DependencyService.Get<ITabbedService>().get().Children[0];
             DependencyService.Get<ITabbedService>().get().Children.RemoveAt(DependencyService.Get<ITabbedService>().get().Children.Count-1);
 #if DEBUG
-            DependencyService.Get<INavigationService>().PushAsync<ShopListPage>();
             Console.WriteLine("[DEBUG] Disconnected !");
 #endif
         }
