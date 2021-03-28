@@ -14,6 +14,7 @@ namespace PizzaIllico.Mobile.ViewModels
     {
         private readonly IApiService _apiService = DependencyService.Get<IApiService>();
 
+        // Liste des commandes passées
         private ObservableCollection<OrderItem> _history;
         public ObservableCollection<OrderItem> History
         {
@@ -28,12 +29,14 @@ namespace PizzaIllico.Mobile.ViewModels
 #endif
             await base.OnResume();
 
+            // Request à l'API
             var response = await _apiService.Get<Response<ObservableCollection<OrderItem>>>(Urls.LIST_ORDERS, null, true);
             if (response.IsSuccess)
             {
 #if DEBUG
                 Console.WriteLine("[DEBUG] HISTORY FETCH SUCCESS !");
 #endif
+                // Mise à jour de la vue avec les commandes passées
                 History = new ObservableCollection<OrderItem>(response.Data.OrderByDescending(order => order.Date));
             }
 #if DEBUG
