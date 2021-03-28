@@ -13,6 +13,8 @@ namespace PizzaIllico.Mobile.Services
 
     public class GeoLocService : IGeoLocService
     {
+        private readonly IToast _toast = DependencyService.Get<IToast>();
+
         public async Task<Location> GetLastPosAsync()
         {
             // Essayer de récupérer la dernière géolocation
@@ -33,19 +35,19 @@ namespace PizzaIllico.Mobile.Services
             // Gestion des erreurs possibles
             catch (FeatureNotSupportedException)
             {
-                DependencyService.Get<IToast>().LongAlert("La feature n'est pas supportée");
+                _toast.LongAlert("La feature n'est pas supportée");
             }
             catch (FeatureNotEnabledException)
             {
-                DependencyService.Get<IToast>().LongAlert("La feature n'est pas activée");
+                _toast.LongAlert("La feature n'est pas activée");
             }
             catch (PermissionException)
             {
-                DependencyService.Get<IToast>().LongAlert("Permissions insuffisantes");
+                _toast.LongAlert("Permissions insuffisantes");
             }
             catch (Exception)
             {
-                DependencyService.Get<IToast>().LongAlert("Erreur inconnue");
+                _toast.LongAlert("Erreur inconnue");
             }
             // Si loc pas trouvé renvoie d'un position de 0 en lattitude et 0 en longitude
             return new Location(0.0, 0.0);
